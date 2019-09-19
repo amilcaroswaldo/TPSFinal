@@ -9,6 +9,6 @@ package Logica_Negocios;
  *
  * @author Amilcar
  */
-public class Materia {
+public class MateNota {
     
 }

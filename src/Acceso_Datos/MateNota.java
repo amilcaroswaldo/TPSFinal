@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logica_Negocios;
+package Acceso_Datos;
 
 /**
  *
  * @author Amilcar
  */
-public class Matricula_Materia {
+public class MateNota {
     
 }
