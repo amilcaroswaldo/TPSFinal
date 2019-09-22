@@ -267,6 +267,7 @@ public class AgMaestro extends javax.swing.JInternalFrame {
 
     private void btnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnActivarActionPerformed
 
     private void txtApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoActionPerformed

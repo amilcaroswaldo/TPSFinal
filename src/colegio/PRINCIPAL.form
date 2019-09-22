@@ -32,6 +32,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Materia"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem3ActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
               <Properties>
@@ -40,7 +43,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Imprimir notas"/>
+                <Property name="text" type="java.lang.String" value="Alumnos Inscritos"/>
               </Properties>
             </MenuItem>
           </SubComponents>

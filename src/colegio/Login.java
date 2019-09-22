@@ -44,7 +44,6 @@ public class Login extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        img = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -62,6 +61,10 @@ public class Login extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setText("LOGIN");
+
+        txtusuario.setFocusable(false);
+
+        txtContra.setFocusable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 204, 204));
 
@@ -113,14 +116,12 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jButton1.setText("jButton1");
+        jButton1.setText("ACCEDER");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        img.setText("jLabel2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,9 +139,7 @@ public class Login extends javax.swing.JFrame {
                             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(img)
-                        .addGap(103, 103, 103)
+                        .addGap(166, 166, 166)
                         .addComponent(jLabel4))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(165, 165, 165)
@@ -152,9 +151,7 @@ public class Login extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(img))
+                .addComponent(jLabel4)
                 .addGap(4, 4, 4)
                 .addComponent(txtusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -169,9 +166,8 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-ImageIcon imagen = new ImageIcon(getClass().getResource("/imagenes/usua.png"));
-    ImageIcon icono = new ImageIcon (imagen.getImage().getScaledInstance(img.getWidth(), img.getHeight(),Image.SCALE_DEFAULT));
-    img.setIcon(icono);        // TODO add your handling code here:
+        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -210,7 +206,6 @@ ImageIcon imagen = new ImageIcon(getClass().getResource("/imagenes/usua.png"));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel img;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;

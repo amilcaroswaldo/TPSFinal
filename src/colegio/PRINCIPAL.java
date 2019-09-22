@@ -79,12 +79,17 @@ public class PRINCIPAL extends javax.swing.JFrame {
         jMenu1.add(jMenuItem2);
 
         jMenuItem3.setText("Materia");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuItem4.setText("Inscripción alumno");
         jMenu1.add(jMenuItem4);
 
-        jMenuItem5.setText("Imprimir notas");
+        jMenuItem5.setText("Alumnos Inscritos");
         jMenu1.add(jMenuItem5);
 
         jMenuBar1.add(jMenu1);
@@ -129,6 +134,13 @@ public class PRINCIPAL extends javax.swing.JFrame {
         escritorio.add(admin);
         admin.show();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        Materias  admin = new Materias();
+        escritorio.add(admin);
+        admin.show();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
