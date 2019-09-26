@@ -39,7 +39,7 @@ public class Materias extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Materias");
+        setTitle("CREAR MATERIAS");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Crear materia"));
 

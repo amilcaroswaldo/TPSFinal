@@ -41,7 +41,7 @@ public class AsignarMateria extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Asignar materia");
+        setTitle("ASIGNAR MATERIA");
         setToolTipText("");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));

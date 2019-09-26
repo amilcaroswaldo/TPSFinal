@@ -41,7 +41,7 @@ public class SalonClase extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Salones de clase");
+        setTitle("SALON DE CLASE");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("CREAR SALON DE CLASE"));
 
