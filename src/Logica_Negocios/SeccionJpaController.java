@@ -12,12 +12,14 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Acceso_Datos.Grado;
 import Acceso_Datos.Seccion;
-import Acceso_Datos.Usuario;
 import Logica_Negocios.exceptions.NonexistentEntityException;
 import Logica_Negocios.exceptions.PreexistingEntityException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -25,8 +27,8 @@ import javax.persistence.EntityManagerFactory;
  */
 public class SeccionJpaController implements Serializable {
 
-    public SeccionJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public SeccionJpaController() {
+        this.emf = Persistence.createEntityManagerFactory("ColegioPU");
     }
     private EntityManagerFactory emf = null;
 
@@ -35,28 +37,28 @@ public class SeccionJpaController implements Serializable {
     }
 
     public void create(Seccion seccion) throws PreexistingEntityException, Exception {
+        if (seccion.getGradoCollection() == null) {
+            seccion.setGradoCollection(new ArrayList<Grado>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Grado idGrado = seccion.getIdGrado();
-            if (idGrado != null) {
-                idGrado = em.getReference(idGrado.getClass(), idGrado.getIdGrado());
-                seccion.setIdGrado(idGrado);
+            Collection<Grado> attachedGradoCollection = new ArrayList<Grado>();
+            for (Grado gradoCollectionGradoToAttach : seccion.getGradoCollection()) {
+                gradoCollectionGradoToAttach = em.getReference(gradoCollectionGradoToAttach.getClass(), gradoCollectionGradoToAttach.getIdGrado());
+                attachedGradoCollection.add(gradoCollectionGradoToAttach);
             }
-            Usuario idUsuario = seccion.getIdUsuario();
-            if (idUsuario != null) {
-                idUsuario = em.getReference(idUsuario.getClass(), idUsuario.getIdUsuario());
-                seccion.setIdUsuario(idUsuario);
-            }
+            seccion.setGradoCollection(attachedGradoCollection);
             em.persist(seccion);
-            if (idGrado != null) {
-                idGrado.getSeccionCollection().add(seccion);
-                idGrado = em.merge(idGrado);
-            }
-            if (idUsuario != null) {
-                idUsuario.getSeccionCollection().add(seccion);
-                idUsuario = em.merge(idUsuario);
+            for (Grado gradoCollectionGrado : seccion.getGradoCollection()) {
+                Seccion oldIdSeccionOfGradoCollectionGrado = gradoCollectionGrado.getIdSeccion();
+                gradoCollectionGrado.setIdSeccion(seccion);
+                gradoCollectionGrado = em.merge(gradoCollectionGrado);
+                if (oldIdSeccionOfGradoCollectionGrado != null) {
+                    oldIdSeccionOfGradoCollectionGrado.getGradoCollection().remove(gradoCollectionGrado);
+                    oldIdSeccionOfGradoCollectionGrado = em.merge(oldIdSeccionOfGradoCollectionGrado);
+                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -77,34 +79,32 @@ public class SeccionJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Seccion persistentSeccion = em.find(Seccion.class, seccion.getIdSeccion());
-            Grado idGradoOld = persistentSeccion.getIdGrado();
-            Grado idGradoNew = seccion.getIdGrado();
-            Usuario idUsuarioOld = persistentSeccion.getIdUsuario();
-            Usuario idUsuarioNew = seccion.getIdUsuario();
-            if (idGradoNew != null) {
-                idGradoNew = em.getReference(idGradoNew.getClass(), idGradoNew.getIdGrado());
-                seccion.setIdGrado(idGradoNew);
+            Collection<Grado> gradoCollectionOld = persistentSeccion.getGradoCollection();
+            Collection<Grado> gradoCollectionNew = seccion.getGradoCollection();
+            Collection<Grado> attachedGradoCollectionNew = new ArrayList<Grado>();
+            for (Grado gradoCollectionNewGradoToAttach : gradoCollectionNew) {
+                gradoCollectionNewGradoToAttach = em.getReference(gradoCollectionNewGradoToAttach.getClass(), gradoCollectionNewGradoToAttach.getIdGrado());
+                attachedGradoCollectionNew.add(gradoCollectionNewGradoToAttach);
             }
-            if (idUsuarioNew != null) {
-                idUsuarioNew = em.getReference(idUsuarioNew.getClass(), idUsuarioNew.getIdUsuario());
-                seccion.setIdUsuario(idUsuarioNew);
-            }
+            gradoCollectionNew = attachedGradoCollectionNew;
+            seccion.setGradoCollection(gradoCollectionNew);
             seccion = em.merge(seccion);
-            if (idGradoOld != null && !idGradoOld.equals(idGradoNew)) {
-                idGradoOld.getSeccionCollection().remove(seccion);
-                idGradoOld = em.merge(idGradoOld);
+            for (Grado gradoCollectionOldGrado : gradoCollectionOld) {
+                if (!gradoCollectionNew.contains(gradoCollectionOldGrado)) {
+                    gradoCollectionOldGrado.setIdSeccion(null);
+                    gradoCollectionOldGrado = em.merge(gradoCollectionOldGrado);
+                }
             }
-            if (idGradoNew != null && !idGradoNew.equals(idGradoOld)) {
-                idGradoNew.getSeccionCollection().add(seccion);
-                idGradoNew = em.merge(idGradoNew);
-            }
-            if (idUsuarioOld != null && !idUsuarioOld.equals(idUsuarioNew)) {
-                idUsuarioOld.getSeccionCollection().remove(seccion);
-                idUsuarioOld = em.merge(idUsuarioOld);
-            }
-            if (idUsuarioNew != null && !idUsuarioNew.equals(idUsuarioOld)) {
-                idUsuarioNew.getSeccionCollection().add(seccion);
-                idUsuarioNew = em.merge(idUsuarioNew);
+            for (Grado gradoCollectionNewGrado : gradoCollectionNew) {
+                if (!gradoCollectionOld.contains(gradoCollectionNewGrado)) {
+                    Seccion oldIdSeccionOfGradoCollectionNewGrado = gradoCollectionNewGrado.getIdSeccion();
+                    gradoCollectionNewGrado.setIdSeccion(seccion);
+                    gradoCollectionNewGrado = em.merge(gradoCollectionNewGrado);
+                    if (oldIdSeccionOfGradoCollectionNewGrado != null && !oldIdSeccionOfGradoCollectionNewGrado.equals(seccion)) {
+                        oldIdSeccionOfGradoCollectionNewGrado.getGradoCollection().remove(gradoCollectionNewGrado);
+                        oldIdSeccionOfGradoCollectionNewGrado = em.merge(oldIdSeccionOfGradoCollectionNewGrado);
+                    }
+                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -135,15 +135,10 @@ public class SeccionJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The seccion with id " + id + " no longer exists.", enfe);
             }
-            Grado idGrado = seccion.getIdGrado();
-            if (idGrado != null) {
-                idGrado.getSeccionCollection().remove(seccion);
-                idGrado = em.merge(idGrado);
-            }
-            Usuario idUsuario = seccion.getIdUsuario();
-            if (idUsuario != null) {
-                idUsuario.getSeccionCollection().remove(seccion);
-                idUsuario = em.merge(idUsuario);
+            Collection<Grado> gradoCollection = seccion.getGradoCollection();
+            for (Grado gradoCollectionGrado : gradoCollection) {
+                gradoCollectionGrado.setIdSeccion(null);
+                gradoCollectionGrado = em.merge(gradoCollectionGrado);
             }
             em.remove(seccion);
             em.getTransaction().commit();

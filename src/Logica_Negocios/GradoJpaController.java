@@ -14,11 +14,10 @@ import javax.persistence.criteria.Root;
 import Acceso_Datos.Seccion;
 import Logica_Negocios.exceptions.NonexistentEntityException;
 import Logica_Negocios.exceptions.PreexistingEntityException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -26,8 +25,8 @@ import javax.persistence.EntityManagerFactory;
  */
 public class GradoJpaController implements Serializable {
 
-    public GradoJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public GradoJpaController() {
+        this.emf = Persistence.createEntityManagerFactory("ColegioPU");
     }
     private EntityManagerFactory emf = null;
 
@@ -36,28 +35,19 @@ public class GradoJpaController implements Serializable {
     }
 
     public void create(Grado grado) throws PreexistingEntityException, Exception {
-        if (grado.getSeccionCollection() == null) {
-            grado.setSeccionCollection(new ArrayList<Seccion>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Collection<Seccion> attachedSeccionCollection = new ArrayList<Seccion>();
-            for (Seccion seccionCollectionSeccionToAttach : grado.getSeccionCollection()) {
-                seccionCollectionSeccionToAttach = em.getReference(seccionCollectionSeccionToAttach.getClass(), seccionCollectionSeccionToAttach.getIdSeccion());
-                attachedSeccionCollection.add(seccionCollectionSeccionToAttach);
+            Seccion idSeccion = grado.getIdSeccion();
+            if (idSeccion != null) {
+                idSeccion = em.getReference(idSeccion.getClass(), idSeccion.getIdSeccion());
+                grado.setIdSeccion(idSeccion);
             }
-            grado.setSeccionCollection(attachedSeccionCollection);
             em.persist(grado);
-            for (Seccion seccionCollectionSeccion : grado.getSeccionCollection()) {
-                Grado oldIdGradoOfSeccionCollectionSeccion = seccionCollectionSeccion.getIdGrado();
-                seccionCollectionSeccion.setIdGrado(grado);
-                seccionCollectionSeccion = em.merge(seccionCollectionSeccion);
-                if (oldIdGradoOfSeccionCollectionSeccion != null) {
-                    oldIdGradoOfSeccionCollectionSeccion.getSeccionCollection().remove(seccionCollectionSeccion);
-                    oldIdGradoOfSeccionCollectionSeccion = em.merge(oldIdGradoOfSeccionCollectionSeccion);
-                }
+            if (idSeccion != null) {
+                idSeccion.getGradoCollection().add(grado);
+                idSeccion = em.merge(idSeccion);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -78,32 +68,20 @@ public class GradoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Grado persistentGrado = em.find(Grado.class, grado.getIdGrado());
-            Collection<Seccion> seccionCollectionOld = persistentGrado.getSeccionCollection();
-            Collection<Seccion> seccionCollectionNew = grado.getSeccionCollection();
-            Collection<Seccion> attachedSeccionCollectionNew = new ArrayList<Seccion>();
-            for (Seccion seccionCollectionNewSeccionToAttach : seccionCollectionNew) {
-                seccionCollectionNewSeccionToAttach = em.getReference(seccionCollectionNewSeccionToAttach.getClass(), seccionCollectionNewSeccionToAttach.getIdSeccion());
-                attachedSeccionCollectionNew.add(seccionCollectionNewSeccionToAttach);
+            Seccion idSeccionOld = persistentGrado.getIdSeccion();
+            Seccion idSeccionNew = grado.getIdSeccion();
+            if (idSeccionNew != null) {
+                idSeccionNew = em.getReference(idSeccionNew.getClass(), idSeccionNew.getIdSeccion());
+                grado.setIdSeccion(idSeccionNew);
             }
-            seccionCollectionNew = attachedSeccionCollectionNew;
-            grado.setSeccionCollection(seccionCollectionNew);
             grado = em.merge(grado);
-            for (Seccion seccionCollectionOldSeccion : seccionCollectionOld) {
-                if (!seccionCollectionNew.contains(seccionCollectionOldSeccion)) {
-                    seccionCollectionOldSeccion.setIdGrado(null);
-                    seccionCollectionOldSeccion = em.merge(seccionCollectionOldSeccion);
-                }
+            if (idSeccionOld != null && !idSeccionOld.equals(idSeccionNew)) {
+                idSeccionOld.getGradoCollection().remove(grado);
+                idSeccionOld = em.merge(idSeccionOld);
             }
-            for (Seccion seccionCollectionNewSeccion : seccionCollectionNew) {
-                if (!seccionCollectionOld.contains(seccionCollectionNewSeccion)) {
-                    Grado oldIdGradoOfSeccionCollectionNewSeccion = seccionCollectionNewSeccion.getIdGrado();
-                    seccionCollectionNewSeccion.setIdGrado(grado);
-                    seccionCollectionNewSeccion = em.merge(seccionCollectionNewSeccion);
-                    if (oldIdGradoOfSeccionCollectionNewSeccion != null && !oldIdGradoOfSeccionCollectionNewSeccion.equals(grado)) {
-                        oldIdGradoOfSeccionCollectionNewSeccion.getSeccionCollection().remove(seccionCollectionNewSeccion);
-                        oldIdGradoOfSeccionCollectionNewSeccion = em.merge(oldIdGradoOfSeccionCollectionNewSeccion);
-                    }
-                }
+            if (idSeccionNew != null && !idSeccionNew.equals(idSeccionOld)) {
+                idSeccionNew.getGradoCollection().add(grado);
+                idSeccionNew = em.merge(idSeccionNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -134,10 +112,10 @@ public class GradoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The grado with id " + id + " no longer exists.", enfe);
             }
-            Collection<Seccion> seccionCollection = grado.getSeccionCollection();
-            for (Seccion seccionCollectionSeccion : seccionCollection) {
-                seccionCollectionSeccion.setIdGrado(null);
-                seccionCollectionSeccion = em.merge(seccionCollectionSeccion);
+            Seccion idSeccion = grado.getIdSeccion();
+            if (idSeccion != null) {
+                idSeccion.getGradoCollection().remove(grado);
+                idSeccion = em.merge(idSeccion);
             }
             em.remove(grado);
             em.getTransaction().commit();

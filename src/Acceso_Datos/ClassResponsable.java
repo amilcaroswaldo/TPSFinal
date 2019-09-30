@@ -10,10 +10,13 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -32,11 +35,17 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Responsable.findByApellido", query = "SELECT r FROM Responsable r WHERE r.apellido = :apellido"),
     @NamedQuery(name = "Responsable.findByDireccion", query = "SELECT r FROM Responsable r WHERE r.direccion = :direccion"),
     @NamedQuery(name = "Responsable.findByDui", query = "SELECT r FROM Responsable r WHERE r.dui = :dui"),
-    @NamedQuery(name = "Responsable.findByTelefono", query = "SELECT r FROM Responsable r WHERE r.telefono = :telefono")})
-public class Responsable implements Serializable {
+    @NamedQuery(name = "Responsable.findByTelefono", query = "SELECT r FROM Responsable r WHERE r.telefono = :telefono"),
+    @NamedQuery(name = "Responsable.findByProfesion", query = "SELECT r FROM Responsable r WHERE r.profesion = :profesion"),
+    @NamedQuery(name = "Responsable.findByLugarTrabajo", query = "SELECT r FROM Responsable r WHERE r.lugarTrabajo = :lugarTrabajo"),
+    @NamedQuery(name = "Responsable.findByTelefonoTrabajo", query = "SELECT r FROM Responsable r WHERE r.telefonoTrabajo = :telefonoTrabajo"),
+    @NamedQuery(name = "Responsable.findByDireccionTrabajo", query = "SELECT r FROM Responsable r WHERE r.direccionTrabajo = :direccionTrabajo")})
+public class ClassResponsable implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @SequenceGenerator(name = "responsable_seq", sequenceName = "responsable_seq", allocationSize = 1) 
+    @GeneratedValue(strategy= GenerationType.IDENTITY , generator="responsable_seq")
     @Column(name = "ID_RESPONSABLE")
     private Short idResponsable;
     @Basic(optional = false)
@@ -52,17 +61,25 @@ public class Responsable implements Serializable {
     private String dui;
     @Column(name = "TELEFONO")
     private String telefono;
+    @Column(name = "PROFESION")
+    private String profesion;
+    @Column(name = "LUGAR_TRABAJO")
+    private String lugarTrabajo;
+    @Column(name = "TELEFONO_TRABAJO")
+    private String telefonoTrabajo;
+    @Column(name = "DIRECCION_TRABAJO")
+    private String direccionTrabajo;
     @OneToMany(mappedBy = "idResponsable")
     private Collection<Alumno> alumnoCollection;
 
-    public Responsable() {
+    public ClassResponsable() {
     }
 
-    public Responsable(Short idResponsable) {
+    public ClassResponsable(Short idResponsable) {
         this.idResponsable = idResponsable;
     }
 
-    public Responsable(Short idResponsable, String nombre, String apellido, String direccion) {
+    public ClassResponsable(Short idResponsable, String nombre, String apellido, String direccion) {
         this.idResponsable = idResponsable;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -117,6 +134,38 @@ public class Responsable implements Serializable {
         this.telefono = telefono;
     }
 
+    public String getProfesion() {
+        return profesion;
+    }
+
+    public void setProfesion(String profesion) {
+        this.profesion = profesion;
+    }
+
+    public String getLugarTrabajo() {
+        return lugarTrabajo;
+    }
+
+    public void setLugarTrabajo(String lugarTrabajo) {
+        this.lugarTrabajo = lugarTrabajo;
+    }
+
+    public String getTelefonoTrabajo() {
+        return telefonoTrabajo;
+    }
+
+    public void setTelefonoTrabajo(String telefonoTrabajo) {
+        this.telefonoTrabajo = telefonoTrabajo;
+    }
+
+    public String getDireccionTrabajo() {
+        return direccionTrabajo;
+    }
+
+    public void setDireccionTrabajo(String direccionTrabajo) {
+        this.direccionTrabajo = direccionTrabajo;
+    }
+
     @XmlTransient
     public Collection<Alumno> getAlumnoCollection() {
         return alumnoCollection;
@@ -136,10 +185,10 @@ public class Responsable implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Responsable)) {
+        if (!(object instanceof ClassResponsable)) {
             return false;
         }
-        Responsable other = (Responsable) object;
+        ClassResponsable other = (ClassResponsable) object;
         if ((this.idResponsable == null && other.idResponsable != null) || (this.idResponsable != null && !this.idResponsable.equals(other.idResponsable))) {
             return false;
         }

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Acceso_Datos;
+package Logica_Negocios;
 
 /**
  *
  * @author Amilcar
  */
-public class Calificacion {
+public class UsuarioMate {
     
 }

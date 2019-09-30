@@ -11,16 +11,16 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Acceso_Datos.TipoUsuario;
-import Acceso_Datos.Seccion;
-import java.util.ArrayList;
-import java.util.Collection;
 import Acceso_Datos.HistorialTrabajador;
 import Acceso_Datos.Usuario;
 import Logica_Negocios.exceptions.NonexistentEntityException;
 import Logica_Negocios.exceptions.PreexistingEntityException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -28,8 +28,8 @@ import javax.persistence.EntityManagerFactory;
  */
 public class UsuarioJpaController implements Serializable {
 
-    public UsuarioJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public UsuarioJpaController() {
+        this.emf = Persistence.createEntityManagerFactory("ColegioPU");
     }
     private EntityManagerFactory emf = null;
 
@@ -38,9 +38,6 @@ public class UsuarioJpaController implements Serializable {
     }
 
     public void create(Usuario usuario) throws PreexistingEntityException, Exception {
-        if (usuario.getSeccionCollection() == null) {
-            usuario.setSeccionCollection(new ArrayList<Seccion>());
-        }
         if (usuario.getHistorialTrabajadorCollection() == null) {
             usuario.setHistorialTrabajadorCollection(new ArrayList<HistorialTrabajador>());
         }
@@ -53,12 +50,6 @@ public class UsuarioJpaController implements Serializable {
                 idTipo = em.getReference(idTipo.getClass(), idTipo.getIdTipo());
                 usuario.setIdTipo(idTipo);
             }
-            Collection<Seccion> attachedSeccionCollection = new ArrayList<Seccion>();
-            for (Seccion seccionCollectionSeccionToAttach : usuario.getSeccionCollection()) {
-                seccionCollectionSeccionToAttach = em.getReference(seccionCollectionSeccionToAttach.getClass(), seccionCollectionSeccionToAttach.getIdSeccion());
-                attachedSeccionCollection.add(seccionCollectionSeccionToAttach);
-            }
-            usuario.setSeccionCollection(attachedSeccionCollection);
             Collection<HistorialTrabajador> attachedHistorialTrabajadorCollection = new ArrayList<HistorialTrabajador>();
             for (HistorialTrabajador historialTrabajadorCollectionHistorialTrabajadorToAttach : usuario.getHistorialTrabajadorCollection()) {
                 historialTrabajadorCollectionHistorialTrabajadorToAttach = em.getReference(historialTrabajadorCollectionHistorialTrabajadorToAttach.getClass(), historialTrabajadorCollectionHistorialTrabajadorToAttach.getIdHistorialTrabajador());
@@ -69,15 +60,6 @@ public class UsuarioJpaController implements Serializable {
             if (idTipo != null) {
                 idTipo.getUsuarioCollection().add(usuario);
                 idTipo = em.merge(idTipo);
-            }
-            for (Seccion seccionCollectionSeccion : usuario.getSeccionCollection()) {
-                Usuario oldIdUsuarioOfSeccionCollectionSeccion = seccionCollectionSeccion.getIdUsuario();
-                seccionCollectionSeccion.setIdUsuario(usuario);
-                seccionCollectionSeccion = em.merge(seccionCollectionSeccion);
-                if (oldIdUsuarioOfSeccionCollectionSeccion != null) {
-                    oldIdUsuarioOfSeccionCollectionSeccion.getSeccionCollection().remove(seccionCollectionSeccion);
-                    oldIdUsuarioOfSeccionCollectionSeccion = em.merge(oldIdUsuarioOfSeccionCollectionSeccion);
-                }
             }
             for (HistorialTrabajador historialTrabajadorCollectionHistorialTrabajador : usuario.getHistorialTrabajadorCollection()) {
                 Usuario oldIdUsuarioOfHistorialTrabajadorCollectionHistorialTrabajador = historialTrabajadorCollectionHistorialTrabajador.getIdUsuario();
@@ -109,21 +91,12 @@ public class UsuarioJpaController implements Serializable {
             Usuario persistentUsuario = em.find(Usuario.class, usuario.getIdUsuario());
             TipoUsuario idTipoOld = persistentUsuario.getIdTipo();
             TipoUsuario idTipoNew = usuario.getIdTipo();
-            Collection<Seccion> seccionCollectionOld = persistentUsuario.getSeccionCollection();
-            Collection<Seccion> seccionCollectionNew = usuario.getSeccionCollection();
             Collection<HistorialTrabajador> historialTrabajadorCollectionOld = persistentUsuario.getHistorialTrabajadorCollection();
             Collection<HistorialTrabajador> historialTrabajadorCollectionNew = usuario.getHistorialTrabajadorCollection();
             if (idTipoNew != null) {
                 idTipoNew = em.getReference(idTipoNew.getClass(), idTipoNew.getIdTipo());
                 usuario.setIdTipo(idTipoNew);
             }
-            Collection<Seccion> attachedSeccionCollectionNew = new ArrayList<Seccion>();
-            for (Seccion seccionCollectionNewSeccionToAttach : seccionCollectionNew) {
-                seccionCollectionNewSeccionToAttach = em.getReference(seccionCollectionNewSeccionToAttach.getClass(), seccionCollectionNewSeccionToAttach.getIdSeccion());
-                attachedSeccionCollectionNew.add(seccionCollectionNewSeccionToAttach);
-            }
-            seccionCollectionNew = attachedSeccionCollectionNew;
-            usuario.setSeccionCollection(seccionCollectionNew);
             Collection<HistorialTrabajador> attachedHistorialTrabajadorCollectionNew = new ArrayList<HistorialTrabajador>();
             for (HistorialTrabajador historialTrabajadorCollectionNewHistorialTrabajadorToAttach : historialTrabajadorCollectionNew) {
                 historialTrabajadorCollectionNewHistorialTrabajadorToAttach = em.getReference(historialTrabajadorCollectionNewHistorialTrabajadorToAttach.getClass(), historialTrabajadorCollectionNewHistorialTrabajadorToAttach.getIdHistorialTrabajador());
@@ -139,23 +112,6 @@ public class UsuarioJpaController implements Serializable {
             if (idTipoNew != null && !idTipoNew.equals(idTipoOld)) {
                 idTipoNew.getUsuarioCollection().add(usuario);
                 idTipoNew = em.merge(idTipoNew);
-            }
-            for (Seccion seccionCollectionOldSeccion : seccionCollectionOld) {
-                if (!seccionCollectionNew.contains(seccionCollectionOldSeccion)) {
-                    seccionCollectionOldSeccion.setIdUsuario(null);
-                    seccionCollectionOldSeccion = em.merge(seccionCollectionOldSeccion);
-                }
-            }
-            for (Seccion seccionCollectionNewSeccion : seccionCollectionNew) {
-                if (!seccionCollectionOld.contains(seccionCollectionNewSeccion)) {
-                    Usuario oldIdUsuarioOfSeccionCollectionNewSeccion = seccionCollectionNewSeccion.getIdUsuario();
-                    seccionCollectionNewSeccion.setIdUsuario(usuario);
-                    seccionCollectionNewSeccion = em.merge(seccionCollectionNewSeccion);
-                    if (oldIdUsuarioOfSeccionCollectionNewSeccion != null && !oldIdUsuarioOfSeccionCollectionNewSeccion.equals(usuario)) {
-                        oldIdUsuarioOfSeccionCollectionNewSeccion.getSeccionCollection().remove(seccionCollectionNewSeccion);
-                        oldIdUsuarioOfSeccionCollectionNewSeccion = em.merge(oldIdUsuarioOfSeccionCollectionNewSeccion);
-                    }
-                }
             }
             for (HistorialTrabajador historialTrabajadorCollectionOldHistorialTrabajador : historialTrabajadorCollectionOld) {
                 if (!historialTrabajadorCollectionNew.contains(historialTrabajadorCollectionOldHistorialTrabajador)) {
@@ -207,11 +163,6 @@ public class UsuarioJpaController implements Serializable {
             if (idTipo != null) {
                 idTipo.getUsuarioCollection().remove(usuario);
                 idTipo = em.merge(idTipo);
-            }
-            Collection<Seccion> seccionCollection = usuario.getSeccionCollection();
-            for (Seccion seccionCollectionSeccion : seccionCollection) {
-                seccionCollectionSeccion.setIdUsuario(null);
-                seccionCollectionSeccion = em.merge(seccionCollectionSeccion);
             }
             Collection<HistorialTrabajador> historialTrabajadorCollection = usuario.getHistorialTrabajadorCollection();
             for (HistorialTrabajador historialTrabajadorCollectionHistorialTrabajador : historialTrabajadorCollection) {

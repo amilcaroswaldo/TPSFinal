@@ -7,19 +7,19 @@ package Acceso_Datos;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre"),
     @NamedQuery(name = "Usuario.findByApellido", query = "SELECT u FROM Usuario u WHERE u.apellido = :apellido"),
     @NamedQuery(name = "Usuario.findByNomusuario", query = "SELECT u FROM Usuario u WHERE u.nomusuario = :nomusuario"),
-    @NamedQuery(name = "Usuario.findByPassw", query = "SELECT u FROM Usuario u WHERE u.passw = :passw"),
+    @NamedQuery(name = "Usuario.findByPass", query = "SELECT u FROM Usuario u WHERE u.pass = :pass"),
     @NamedQuery(name = "Usuario.findByFechaNac", query = "SELECT u FROM Usuario u WHERE u.fechaNac = :fechaNac"),
     @NamedQuery(name = "Usuario.findByDui", query = "SELECT u FROM Usuario u WHERE u.dui = :dui"),
     @NamedQuery(name = "Usuario.findByTelefono", query = "SELECT u FROM Usuario u WHERE u.telefono = :telefono"),
@@ -45,6 +45,8 @@ public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @SequenceGenerator(name = "usuario_seq", sequenceName = "usuario_seq", allocationSize = 1) 
+    @GeneratedValue(strategy= GenerationType.IDENTITY , generator="usuario_seq")
     @Column(name = "ID_USUARIO")
     private Short idUsuario;
     @Basic(optional = false)
@@ -57,11 +59,10 @@ public class Usuario implements Serializable {
     @Column(name = "NOMUSUARIO")
     private String nomusuario;
     @Basic(optional = false)
-    @Column(name = "PASSW")
-    private String passw;
+    @Column(name = "PASS")
+    private String pass;
     @Column(name = "FECHA_NAC")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaNac;
+    private String fechaNac;
     @Column(name = "DUI")
     private String dui;
     @Column(name = "TELEFONO")
@@ -69,8 +70,6 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "ESTADO")
     private Character estado;
-    @OneToMany(mappedBy = "idUsuario")
-    private Collection<Seccion> seccionCollection;
     @OneToMany(mappedBy = "idUsuario")
     private Collection<HistorialTrabajador> historialTrabajadorCollection;
     @JoinColumn(name = "ID_TIPO", referencedColumnName = "ID_TIPO")
@@ -84,12 +83,12 @@ public class Usuario implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public Usuario(Short idUsuario, String nombre, String apellido, String nomusuario, String passw, Character estado) {
+    public Usuario(Short idUsuario, String nombre, String apellido, String nomusuario, String pass, Character estado) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.apellido = apellido;
         this.nomusuario = nomusuario;
-        this.passw = passw;
+        this.pass = pass;
         this.estado = estado;
     }
 
@@ -125,19 +124,19 @@ public class Usuario implements Serializable {
         this.nomusuario = nomusuario;
     }
 
-    public String getPassw() {
-        return passw;
+    public String getPass() {
+        return pass;
     }
 
-    public void setPassw(String passw) {
-        this.passw = passw;
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
-    public Date getFechaNac() {
+    public String getFechaNac() {
         return fechaNac;
     }
 
-    public void setFechaNac(Date fechaNac) {
+    public void setFechaNac(String fechaNac) {
         this.fechaNac = fechaNac;
     }
 
@@ -163,15 +162,6 @@ public class Usuario implements Serializable {
 
     public void setEstado(Character estado) {
         this.estado = estado;
-    }
-
-    @XmlTransient
-    public Collection<Seccion> getSeccionCollection() {
-        return seccionCollection;
-    }
-
-    public void setSeccionCollection(Collection<Seccion> seccionCollection) {
-        this.seccionCollection = seccionCollection;
     }
 
     @XmlTransient

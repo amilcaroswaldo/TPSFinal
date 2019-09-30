@@ -6,18 +6,18 @@
 package Acceso_Datos;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -33,12 +33,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Alumno.findByNombre", query = "SELECT a FROM Alumno a WHERE a.nombre = :nombre"),
     @NamedQuery(name = "Alumno.findByApellido", query = "SELECT a FROM Alumno a WHERE a.apellido = :apellido"),
     @NamedQuery(name = "Alumno.findByFechaNacimiento", query = "SELECT a FROM Alumno a WHERE a.fechaNacimiento = :fechaNacimiento"),
-    @NamedQuery(name = "Alumno.findByTelefono", query = "SELECT a FROM Alumno a WHERE a.telefono = :telefono"),
-    @NamedQuery(name = "Alumno.findByEstado", query = "SELECT a FROM Alumno a WHERE a.estado = :estado")})
+    @NamedQuery(name = "Alumno.findByProblemasSalud", query = "SELECT a FROM Alumno a WHERE a.problemasSalud = :problemasSalud")})
 public class Alumno implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @SequenceGenerator(name = "alumno_seq", sequenceName = "alumno_seq", allocationSize = 1) 
+    @GeneratedValue(strategy= GenerationType.IDENTITY , generator="alumno_seq")
     @Column(name = "ID_ALUMNO")
     private Short idAlumno;
     @Basic(optional = false)
@@ -48,15 +49,15 @@ public class Alumno implements Serializable {
     @Column(name = "APELLIDO")
     private String apellido;
     @Column(name = "FECHA_NACIMIENTO")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaNacimiento;
-    @Column(name = "TELEFONO")
-    private String telefono;
-    @Column(name = "ESTADO")
-    private Character estado;
+    private String fechaNacimiento;
+    @Column(name = "PROBLEMAS_SALUD")
+    private String problemasSalud;
+    @JoinColumn(name = "ID_PARENTESCO", referencedColumnName = "ID_PARENTESCO")
+    @ManyToOne
+    private Parentesco idParentesco;
     @JoinColumn(name = "ID_RESPONSABLE", referencedColumnName = "ID_RESPONSABLE")
     @ManyToOne
-    private Responsable idResponsable;
+    private ClassResponsable idResponsable;
 
     public Alumno() {
     }
@@ -95,35 +96,35 @@ public class Alumno implements Serializable {
         this.apellido = apellido;
     }
 
-    public Date getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getProblemasSalud() {
+        return problemasSalud;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setProblemasSalud(String problemasSalud) {
+        this.problemasSalud = problemasSalud;
     }
 
-    public Character getEstado() {
-        return estado;
+    public Parentesco getIdParentesco() {
+        return idParentesco;
     }
 
-    public void setEstado(Character estado) {
-        this.estado = estado;
+    public void setIdParentesco(Parentesco idParentesco) {
+        this.idParentesco = idParentesco;
     }
 
-    public Responsable getIdResponsable() {
+    public ClassResponsable getIdResponsable() {
         return idResponsable;
     }
 
-    public void setIdResponsable(Responsable idResponsable) {
+    public void setIdResponsable(ClassResponsable idResponsable) {
         this.idResponsable = idResponsable;
     }
 

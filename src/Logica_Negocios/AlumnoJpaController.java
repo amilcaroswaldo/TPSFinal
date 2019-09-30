@@ -11,12 +11,14 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import Acceso_Datos.Responsable;
+import Acceso_Datos.Parentesco;
+import Acceso_Datos.ClassResponsable;
 import Logica_Negocios.exceptions.NonexistentEntityException;
 import Logica_Negocios.exceptions.PreexistingEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -24,8 +26,8 @@ import javax.persistence.EntityManagerFactory;
  */
 public class AlumnoJpaController implements Serializable {
 
-    public AlumnoJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public AlumnoJpaController() {
+        this.emf = Persistence.createEntityManagerFactory("ColegioPU");
     }
     private EntityManagerFactory emf = null;
 
@@ -38,12 +40,21 @@ public class AlumnoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Responsable idResponsable = alumno.getIdResponsable();
+            Parentesco idParentesco = alumno.getIdParentesco();
+            if (idParentesco != null) {
+                idParentesco = em.getReference(idParentesco.getClass(), idParentesco.getIdParentesco());
+                alumno.setIdParentesco(idParentesco);
+            }
+            ClassResponsable idResponsable = alumno.getIdResponsable();
             if (idResponsable != null) {
                 idResponsable = em.getReference(idResponsable.getClass(), idResponsable.getIdResponsable());
                 alumno.setIdResponsable(idResponsable);
             }
             em.persist(alumno);
+            if (idParentesco != null) {
+                idParentesco.getAlumnoCollection().add(alumno);
+                idParentesco = em.merge(idParentesco);
+            }
             if (idResponsable != null) {
                 idResponsable.getAlumnoCollection().add(alumno);
                 idResponsable = em.merge(idResponsable);
@@ -67,13 +78,27 @@ public class AlumnoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Alumno persistentAlumno = em.find(Alumno.class, alumno.getIdAlumno());
-            Responsable idResponsableOld = persistentAlumno.getIdResponsable();
-            Responsable idResponsableNew = alumno.getIdResponsable();
+            Parentesco idParentescoOld = persistentAlumno.getIdParentesco();
+            Parentesco idParentescoNew = alumno.getIdParentesco();
+            ClassResponsable idResponsableOld = persistentAlumno.getIdResponsable();
+            ClassResponsable idResponsableNew = alumno.getIdResponsable();
+            if (idParentescoNew != null) {
+                idParentescoNew = em.getReference(idParentescoNew.getClass(), idParentescoNew.getIdParentesco());
+                alumno.setIdParentesco(idParentescoNew);
+            }
             if (idResponsableNew != null) {
                 idResponsableNew = em.getReference(idResponsableNew.getClass(), idResponsableNew.getIdResponsable());
                 alumno.setIdResponsable(idResponsableNew);
             }
             alumno = em.merge(alumno);
+            if (idParentescoOld != null && !idParentescoOld.equals(idParentescoNew)) {
+                idParentescoOld.getAlumnoCollection().remove(alumno);
+                idParentescoOld = em.merge(idParentescoOld);
+            }
+            if (idParentescoNew != null && !idParentescoNew.equals(idParentescoOld)) {
+                idParentescoNew.getAlumnoCollection().add(alumno);
+                idParentescoNew = em.merge(idParentescoNew);
+            }
             if (idResponsableOld != null && !idResponsableOld.equals(idResponsableNew)) {
                 idResponsableOld.getAlumnoCollection().remove(alumno);
                 idResponsableOld = em.merge(idResponsableOld);
@@ -111,7 +136,12 @@ public class AlumnoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The alumno with id " + id + " no longer exists.", enfe);
             }
-            Responsable idResponsable = alumno.getIdResponsable();
+            Parentesco idParentesco = alumno.getIdParentesco();
+            if (idParentesco != null) {
+                idParentesco.getAlumnoCollection().remove(alumno);
+                idParentesco = em.merge(idParentesco);
+            }
+            ClassResponsable idResponsable = alumno.getIdResponsable();
             if (idResponsable != null) {
                 idResponsable.getAlumnoCollection().remove(alumno);
                 idResponsable = em.merge(idResponsable);

@@ -18,6 +18,7 @@ import Logica_Negocios.exceptions.PreexistingEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -25,8 +26,8 @@ import javax.persistence.EntityManagerFactory;
  */
 public class HistorialTrabajadorJpaController implements Serializable {
 
-    public HistorialTrabajadorJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public HistorialTrabajadorJpaController() {
+        this.emf = Persistence.createEntityManagerFactory("ColegioPU");
     }
     private EntityManagerFactory emf = null;
 

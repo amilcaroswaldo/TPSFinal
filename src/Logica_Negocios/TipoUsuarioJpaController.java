@@ -20,6 +20,7 @@ import Logica_Negocios.exceptions.PreexistingEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -27,8 +28,8 @@ import javax.persistence.EntityManagerFactory;
  */
 public class TipoUsuarioJpaController implements Serializable {
 
-    public TipoUsuarioJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public TipoUsuarioJpaController() {
+        this.emf = Persistence.createEntityManagerFactory("ColegioPU");
     }
     private EntityManagerFactory emf = null;
 

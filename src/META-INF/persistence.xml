@@ -10,8 +10,9 @@
     <class>Acceso_Datos.Periodo</class>
     <class>Acceso_Datos.HistorialTrabajador</class>
     <class>Acceso_Datos.Usuario</class>
-    <class>Acceso_Datos.Responsable</class>
     <class>Acceso_Datos.Seccion</class>
+    <class>Acceso_Datos.Parentesco</class>
+    <class>Acceso_Datos.ClassResponsable</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
       <property name="javax.persistence.jdbc.user" value="system"/>

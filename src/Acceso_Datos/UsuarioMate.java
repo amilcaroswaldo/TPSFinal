@@ -9,6 +9,6 @@ package Acceso_Datos;
  *
  * @author Amilcar
  */
-public class MateNota {
+public class UsuarioMate {
     
 }

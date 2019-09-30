@@ -11,7 +11,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Acceso_Datos.Alumno;
-import Acceso_Datos.Responsable;
+import Acceso_Datos.ClassResponsable;
 import Logica_Negocios.exceptions.NonexistentEntityException;
 import Logica_Negocios.exceptions.PreexistingEntityException;
 import java.util.ArrayList;
@@ -19,6 +19,10 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -26,8 +30,9 @@ import javax.persistence.EntityManagerFactory;
  */
 public class ResponsableJpaController implements Serializable {
 
-    public ResponsableJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public ResponsableJpaController() {
+       // this.emf = Persistence.createEntityManagerFactory("ColegioPU");
+        this.emf = Persistence.createEntityManagerFactory("ColegioPU");
     }
     private EntityManagerFactory emf = null;
 
@@ -35,7 +40,7 @@ public class ResponsableJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Responsable responsable) throws PreexistingEntityException, Exception {
+    public void create(ClassResponsable responsable) throws PreexistingEntityException, Exception {
         if (responsable.getAlumnoCollection() == null) {
             responsable.setAlumnoCollection(new ArrayList<Alumno>());
         }
@@ -51,7 +56,7 @@ public class ResponsableJpaController implements Serializable {
             responsable.setAlumnoCollection(attachedAlumnoCollection);
             em.persist(responsable);
             for (Alumno alumnoCollectionAlumno : responsable.getAlumnoCollection()) {
-                Responsable oldIdResponsableOfAlumnoCollectionAlumno = alumnoCollectionAlumno.getIdResponsable();
+                ClassResponsable oldIdResponsableOfAlumnoCollectionAlumno = alumnoCollectionAlumno.getIdResponsable();
                 alumnoCollectionAlumno.setIdResponsable(responsable);
                 alumnoCollectionAlumno = em.merge(alumnoCollectionAlumno);
                 if (oldIdResponsableOfAlumnoCollectionAlumno != null) {
@@ -72,12 +77,12 @@ public class ResponsableJpaController implements Serializable {
         }
     }
 
-    public void edit(Responsable responsable) throws NonexistentEntityException, Exception {
+    public void edit(ClassResponsable responsable) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Responsable persistentResponsable = em.find(Responsable.class, responsable.getIdResponsable());
+            ClassResponsable persistentResponsable = em.find(ClassResponsable.class, responsable.getIdResponsable());
             Collection<Alumno> alumnoCollectionOld = persistentResponsable.getAlumnoCollection();
             Collection<Alumno> alumnoCollectionNew = responsable.getAlumnoCollection();
             Collection<Alumno> attachedAlumnoCollectionNew = new ArrayList<Alumno>();
@@ -96,7 +101,7 @@ public class ResponsableJpaController implements Serializable {
             }
             for (Alumno alumnoCollectionNewAlumno : alumnoCollectionNew) {
                 if (!alumnoCollectionOld.contains(alumnoCollectionNewAlumno)) {
-                    Responsable oldIdResponsableOfAlumnoCollectionNewAlumno = alumnoCollectionNewAlumno.getIdResponsable();
+                    ClassResponsable oldIdResponsableOfAlumnoCollectionNewAlumno = alumnoCollectionNewAlumno.getIdResponsable();
                     alumnoCollectionNewAlumno.setIdResponsable(responsable);
                     alumnoCollectionNewAlumno = em.merge(alumnoCollectionNewAlumno);
                     if (oldIdResponsableOfAlumnoCollectionNewAlumno != null && !oldIdResponsableOfAlumnoCollectionNewAlumno.equals(responsable)) {
@@ -127,9 +132,9 @@ public class ResponsableJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Responsable responsable;
+            ClassResponsable responsable;
             try {
-                responsable = em.getReference(Responsable.class, id);
+                responsable = em.getReference(ClassResponsable.class, id);
                 responsable.getIdResponsable();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The responsable with id " + id + " no longer exists.", enfe);
@@ -148,19 +153,19 @@ public class ResponsableJpaController implements Serializable {
         }
     }
 
-    public List<Responsable> findResponsableEntities() {
+    public List<ClassResponsable> findResponsableEntities() {
         return findResponsableEntities(true, -1, -1);
     }
 
-    public List<Responsable> findResponsableEntities(int maxResults, int firstResult) {
+    public List<ClassResponsable> findResponsableEntities(int maxResults, int firstResult) {
         return findResponsableEntities(false, maxResults, firstResult);
     }
 
-    private List<Responsable> findResponsableEntities(boolean all, int maxResults, int firstResult) {
+    private List<ClassResponsable> findResponsableEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Responsable.class));
+            cq.select(cq.from(ClassResponsable.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -172,10 +177,10 @@ public class ResponsableJpaController implements Serializable {
         }
     }
 
-    public Responsable findResponsable(Short id) {
+    public ClassResponsable findResponsable(Short id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Responsable.class, id);
+            return em.find(ClassResponsable.class, id);
         } finally {
             em.close();
         }
@@ -185,7 +190,7 @@ public class ResponsableJpaController implements Serializable {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Responsable> rt = cq.from(Responsable.class);
+            Root<ClassResponsable> rt = cq.from(ClassResponsable.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
@@ -193,5 +198,25 @@ public class ResponsableJpaController implements Serializable {
             em.close();
         }
     }
-    
+    public void mostrarResponsable(JTable tabla){
+       DefaultTableModel modelo = null;
+       String[] titulo = {"ID responsable", "Nombre", "Apellido", "Dirección"," DUI","Telefono", "Profesion","Lugar de trabajo", "Telefono de trabajo","Dirección trabajo"};
+        modelo = new DefaultTableModel(null,titulo);
+        List<ClassResponsable> lista = findResponsableEntities();
+        String[] camposRepresentante = new String[11];
+        for (ClassResponsable item : lista) {
+            camposRepresentante[0] = item.getIdResponsable()+"";
+            camposRepresentante[1] = item.getNombre()+"";
+            camposRepresentante[2] = item.getApellido()+"";
+            camposRepresentante[3] = item.getDireccion()+"";
+            camposRepresentante[4] = item.getDui()+"";
+            camposRepresentante[5] = item.getTelefono()+"";
+            camposRepresentante[6] = item.getProfesion()+"";
+            camposRepresentante[7] = item.getLugarTrabajo()+"";
+            camposRepresentante[8] = item.getTelefonoTrabajo()+"";
+            
+            modelo.addRow(camposRepresentante);
+        }
+        tabla.setModel(modelo);
+    }
 }

@@ -5,10 +5,44 @@
  */
 package Acceso_Datos;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Amilcar
  */
 public class Conexion {
+    private static Connection conn=null;
+    private static final String  login = "system";
+    private static final String  clave = "admin";
+    private static final String  url = "jdbc:oracle:thin:@localhost:1521:XE";
     
+    public static Connection getConnection() throws SQLException{
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            conn=DriverManager.getConnection(url,login,clave);
+            conn.setAutoCommit(false);
+                if (conn!=null) {
+                    System.out.println("Conexion exitosa");
+                }
+                else{
+                    System.out.println("Conexion fallida");
+                }
+                
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Conexion erronea");
+        }
+        return conn;
+    }
+    
+    public void desconectar(){
+        try {
+            conn.close();
+        } catch (Exception e) {
+            System.out.println("Error al desconectar"+e.getMessage());
+        }
+    }
 }

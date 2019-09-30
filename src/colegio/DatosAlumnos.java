@@ -4,18 +4,17 @@
  * and open the template in the editor.
  */
 package colegio;
-
+import Logica_Negocios.ResponsableJpaController;
 /**
  *
  * @author DELL
  */
 public class DatosAlumnos extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form Matricula
-     */
+    ResponsableJpaController controlResp = new ResponsableJpaController();
     public DatosAlumnos() {
         initComponents();
+        controlResp.mostrarResponsable(tableResp);
     }
 
     /**
@@ -47,7 +46,7 @@ public class DatosAlumnos extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableResp = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
 
         setClosable(true);
@@ -162,18 +161,18 @@ public class DatosAlumnos extends javax.swing.JInternalFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2019", "2018", "2017", "2016", " " }));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableResp.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableResp);
 
         jButton1.setText("AGREGAR NUEVO RESPONSABLE");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -275,11 +274,11 @@ public class DatosAlumnos extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTable tableResp;
     // End of variables declaration//GEN-END:variables
 }

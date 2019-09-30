@@ -6,16 +6,20 @@
 package Acceso_Datos;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,16 +36,14 @@ public class Seccion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @SequenceGenerator(name = "seccion_seq", sequenceName = "seccion_seq", allocationSize = 1) 
+    @GeneratedValue(strategy= GenerationType.IDENTITY , generator="seccion_seq") 
     @Column(name = "ID_SECCION")
     private Short idSeccion;
     @Column(name = "SECCION")
-    private String seccion;
-    @JoinColumn(name = "ID_GRADO", referencedColumnName = "ID_GRADO")
-    @ManyToOne
-    private Grado idGrado;
-    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
-    @ManyToOne
-    private Usuario idUsuario;
+    private Character seccion;
+    @OneToMany(mappedBy = "idSeccion")
+    private Collection<Grado> gradoCollection;
 
     public Seccion() {
     }
@@ -58,28 +60,21 @@ public class Seccion implements Serializable {
         this.idSeccion = idSeccion;
     }
 
-    public String getSeccion() {
+    public Character getSeccion() {
         return seccion;
     }
 
-    public void setSeccion(String seccion) {
+    public void setSeccion(Character seccion) {
         this.seccion = seccion;
     }
 
-    public Grado getIdGrado() {
-        return idGrado;
+    @XmlTransient
+    public Collection<Grado> getGradoCollection() {
+        return gradoCollection;
     }
 
-    public void setIdGrado(Grado idGrado) {
-        this.idGrado = idGrado;
-    }
-
-    public Usuario getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Usuario idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setGradoCollection(Collection<Grado> gradoCollection) {
+        this.gradoCollection = gradoCollection;
     }
 
     @Override
