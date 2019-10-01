@@ -5,7 +5,6 @@
  */
 package colegio;
 import Logica_Negocios.ResponsableJpaController;
-import Acceso_Datos.ClassResponsable;
 import javax.swing.JOptionPane;
 /**
  *
@@ -14,7 +13,7 @@ import javax.swing.JOptionPane;
 public class Responsable extends javax.swing.JInternalFrame {
 
     ResponsableJpaController controlResp= new ResponsableJpaController();
-    ClassResponsable claseResp = new ClassResponsable();
+    Acceso_Datos.Responsable claseResp = new Acceso_Datos.Responsable();
     public Responsable() {
         initComponents();
     }

@@ -12,7 +12,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Acceso_Datos.Parentesco;
-import Acceso_Datos.ClassResponsable;
+import Acceso_Datos.Responsable;
 import Logica_Negocios.exceptions.NonexistentEntityException;
 import Logica_Negocios.exceptions.PreexistingEntityException;
 import java.util.List;
@@ -45,7 +45,7 @@ public class AlumnoJpaController implements Serializable {
                 idParentesco = em.getReference(idParentesco.getClass(), idParentesco.getIdParentesco());
                 alumno.setIdParentesco(idParentesco);
             }
-            ClassResponsable idResponsable = alumno.getIdResponsable();
+            Responsable idResponsable = alumno.getIdResponsable();
             if (idResponsable != null) {
                 idResponsable = em.getReference(idResponsable.getClass(), idResponsable.getIdResponsable());
                 alumno.setIdResponsable(idResponsable);
@@ -80,8 +80,8 @@ public class AlumnoJpaController implements Serializable {
             Alumno persistentAlumno = em.find(Alumno.class, alumno.getIdAlumno());
             Parentesco idParentescoOld = persistentAlumno.getIdParentesco();
             Parentesco idParentescoNew = alumno.getIdParentesco();
-            ClassResponsable idResponsableOld = persistentAlumno.getIdResponsable();
-            ClassResponsable idResponsableNew = alumno.getIdResponsable();
+            Responsable idResponsableOld = persistentAlumno.getIdResponsable();
+            Responsable idResponsableNew = alumno.getIdResponsable();
             if (idParentescoNew != null) {
                 idParentescoNew = em.getReference(idParentescoNew.getClass(), idParentescoNew.getIdParentesco());
                 alumno.setIdParentesco(idParentescoNew);
@@ -141,7 +141,7 @@ public class AlumnoJpaController implements Serializable {
                 idParentesco.getAlumnoCollection().remove(alumno);
                 idParentesco = em.merge(idParentesco);
             }
-            ClassResponsable idResponsable = alumno.getIdResponsable();
+            Responsable idResponsable = alumno.getIdResponsable();
             if (idResponsable != null) {
                 idResponsable.getAlumnoCollection().remove(alumno);
                 idResponsable = em.merge(idResponsable);

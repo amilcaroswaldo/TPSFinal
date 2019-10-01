@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Responsable.findByLugarTrabajo", query = "SELECT r FROM Responsable r WHERE r.lugarTrabajo = :lugarTrabajo"),
     @NamedQuery(name = "Responsable.findByTelefonoTrabajo", query = "SELECT r FROM Responsable r WHERE r.telefonoTrabajo = :telefonoTrabajo"),
     @NamedQuery(name = "Responsable.findByDireccionTrabajo", query = "SELECT r FROM Responsable r WHERE r.direccionTrabajo = :direccionTrabajo")})
-public class ClassResponsable implements Serializable {
+public class Responsable implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -72,14 +72,14 @@ public class ClassResponsable implements Serializable {
     @OneToMany(mappedBy = "idResponsable")
     private Collection<Alumno> alumnoCollection;
 
-    public ClassResponsable() {
+    public Responsable() {
     }
 
-    public ClassResponsable(Short idResponsable) {
+    public Responsable(Short idResponsable) {
         this.idResponsable = idResponsable;
     }
 
-    public ClassResponsable(Short idResponsable, String nombre, String apellido, String direccion) {
+    public Responsable(Short idResponsable, String nombre, String apellido, String direccion) {
         this.idResponsable = idResponsable;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -185,10 +185,10 @@ public class ClassResponsable implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ClassResponsable)) {
+        if (!(object instanceof Responsable)) {
             return false;
         }
-        ClassResponsable other = (ClassResponsable) object;
+        Responsable other = (Responsable) object;
         if ((this.idResponsable == null && other.idResponsable != null) || (this.idResponsable != null && !this.idResponsable.equals(other.idResponsable))) {
             return false;
         }

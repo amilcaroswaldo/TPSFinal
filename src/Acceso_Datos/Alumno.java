@@ -57,7 +57,7 @@ public class Alumno implements Serializable {
     private Parentesco idParentesco;
     @JoinColumn(name = "ID_RESPONSABLE", referencedColumnName = "ID_RESPONSABLE")
     @ManyToOne
-    private ClassResponsable idResponsable;
+    private Responsable idResponsable;
 
     public Alumno() {
     }
@@ -120,11 +120,11 @@ public class Alumno implements Serializable {
         this.idParentesco = idParentesco;
     }
 
-    public ClassResponsable getIdResponsable() {
+    public Responsable getIdResponsable() {
         return idResponsable;
     }
 
-    public void setIdResponsable(ClassResponsable idResponsable) {
+    public void setIdResponsable(Responsable idResponsable) {
         this.idResponsable = idResponsable;
     }
 
