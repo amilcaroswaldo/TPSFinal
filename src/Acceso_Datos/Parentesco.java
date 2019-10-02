@@ -48,9 +48,11 @@ public class Parentesco implements Serializable {
     public Parentesco() {
     }
 
-    public Parentesco(Short idParentesco) {
+    public Parentesco(Short idParentesco, String parentesco) {
         this.idParentesco = idParentesco;
+        this.parentesco=parentesco;
     }
+
 
     public Short getIdParentesco() {
         return idParentesco;
@@ -99,7 +101,7 @@ public class Parentesco implements Serializable {
 
     @Override
     public String toString() {
-        return "Acceso_Datos.Parentesco[ idParentesco=" + idParentesco + " ]";
+        return parentesco ;
     }
     
 }

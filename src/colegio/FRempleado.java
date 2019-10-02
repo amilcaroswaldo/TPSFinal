@@ -5,6 +5,7 @@
  */
 package colegio;
 import Logica_Negocios.UsuarioJpaController;
+import Logica_Negocios.TipoUsuarioJpaController;
 import Acceso_Datos.Usuario;
 import Acceso_Datos.TipoUsuario;
 import java.util.logging.Level;
@@ -16,10 +17,13 @@ import java.util.logging.Logger;
 public class FRempleado extends javax.swing.JInternalFrame {
 
     UsuarioJpaController controlUsuario = new UsuarioJpaController();
+    TipoUsuarioJpaController controlTiPo = new TipoUsuarioJpaController();
     TipoUsuario classTipo = new TipoUsuario();
     Usuario classUsario = new Usuario();
+    Short idTipo=0;
     public FRempleado() {
         initComponents();
+        controlTiPo.comboTipo(comboPrivilegioEmp);
     }
 
     /**
@@ -43,7 +47,7 @@ public class FRempleado extends javax.swing.JInternalFrame {
         txtApellidoEmp = new javax.swing.JTextField();
         txtUsuarioEmp = new javax.swing.JTextField();
         txtContraEmp = new javax.swing.JPasswordField();
-        comboPrivilegioEmp = new javax.swing.JComboBox();
+        comboPrivilegioEmp = new javax.swing.JComboBox<TipoUsuario>();
         jLabel8 = new javax.swing.JLabel();
         jfFechaNac = new javax.swing.JFormattedTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -85,7 +89,7 @@ public class FRempleado extends javax.swing.JInternalFrame {
             }
         });
 
-        comboPrivilegioEmp.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3" }));
+        comboPrivilegioEmp.setModel(new javax.swing.DefaultComboBoxModel(new String[] { }));
 
         jLabel8.setText("FECHA NACIMIENTO:");
 
@@ -125,8 +129,8 @@ public class FRempleado extends javax.swing.JInternalFrame {
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel6)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(comboPrivilegioEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(228, 228, 228))
+                                    .addComponent(comboPrivilegioEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(110, 110, 110))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,7 +189,7 @@ public class FRempleado extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(txtDirecEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtTelEmp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -228,7 +232,8 @@ public class FRempleado extends javax.swing.JInternalFrame {
 
     private void btnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarActionPerformed
         // TODO add your handling code here:
-        classTipo.setIdTipo(Short.parseShort("1"));
+        idTipo= comboPrivilegioEmp.getItemAt(comboPrivilegioEmp.getSelectedIndex()).getIdTipo();
+        classTipo.setIdTipo(idTipo);
         classUsario.setNombre(txtNombreEmp.getText()+"");
         classUsario.setApellido(txtApellidoEmp.getText()+"");
         classUsario.setDui(txtDUiEmp.getText()+"");
@@ -253,7 +258,7 @@ public class FRempleado extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActivar;
-    private javax.swing.JComboBox comboPrivilegioEmp;
+    private javax.swing.JComboBox<TipoUsuario> comboPrivilegioEmp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

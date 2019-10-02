@@ -116,7 +116,7 @@ public class TipoUsuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Acceso_Datos.TipoUsuario[ idTipo=" + idTipo + " ]";
+        return tipo;
     }
     
 }

@@ -53,8 +53,9 @@ public class Grado implements Serializable {
     public Grado() {
     }
 
-    public Grado(Short idGrado) {
+    public Grado(Short idGrado, String grado) {
         this.idGrado = idGrado;
+        this.grado=grado;
     }
 
     public Grado(Short idGrado, String grado, String anioCreacion) {
@@ -117,7 +118,7 @@ public class Grado implements Serializable {
 
     @Override
     public String toString() {
-        return "Acceso_Datos.Grado[ idGrado=" + idGrado + " ]";
+        return grado;
     }
     
 }

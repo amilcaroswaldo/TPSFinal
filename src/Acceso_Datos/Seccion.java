@@ -48,8 +48,9 @@ public class Seccion implements Serializable {
     public Seccion() {
     }
 
-    public Seccion(Short idSeccion) {
+    public Seccion(Short idSeccion, Character seccion) {
         this.idSeccion = idSeccion;
+        this.seccion = seccion;
     }
 
     public Short getIdSeccion() {
@@ -99,7 +100,7 @@ public class Seccion implements Serializable {
 
     @Override
     public String toString() {
-        return "Acceso_Datos.Seccion[ idSeccion=" + idSeccion + " ]";
+        return seccion+"";
     }
     
 }

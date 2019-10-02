@@ -5,12 +5,12 @@
  */
 package Logica_Negocios;
 
+import Acceso_Datos.Grado;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import Acceso_Datos.Grado;
 import Acceso_Datos.Seccion;
 import Logica_Negocios.exceptions.NonexistentEntityException;
 import Logica_Negocios.exceptions.PreexistingEntityException;
@@ -20,6 +20,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -195,4 +196,17 @@ public class SeccionJpaController implements Serializable {
         }
     }
     
+    public void comboSeccion(JComboBox<Seccion> combo){
+        try {
+            List<Seccion> lista = findSeccionEntities();
+            for (Seccion item : lista) {
+                combo.addItem(new Seccion(
+                        item.getIdSeccion(),
+                        item.getSeccion()
+                )
+                );
+            }
+        } catch (Exception e) {
+        }
+    }
 }

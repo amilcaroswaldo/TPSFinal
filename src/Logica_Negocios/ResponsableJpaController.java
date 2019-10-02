@@ -11,6 +11,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Acceso_Datos.Alumno;
+import Acceso_Datos.Parentesco;
+import static Acceso_Datos.Parentesco_.parentesco;
 import Acceso_Datos.Responsable;
 import Logica_Negocios.exceptions.NonexistentEntityException;
 import Logica_Negocios.exceptions.PreexistingEntityException;
@@ -20,6 +22,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.JComboBox;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -29,10 +32,14 @@ import javax.swing.table.DefaultTableModel;
  * @author Amilcar
  */
 public class ResponsableJpaController implements Serializable {
+    
+    //variables
+    ParentescoJpaController controlParen= new ParentescoJpaController();
 
     public ResponsableJpaController() {
        // this.emf = Persistence.createEntityManagerFactory("ColegioPU");
         this.emf = Persistence.createEntityManagerFactory("ColegioPU");
+        
     }
     private EntityManagerFactory emf = null;
 
@@ -218,5 +225,19 @@ public class ResponsableJpaController implements Serializable {
             modelo.addRow(camposRepresentante);
         }
         tabla.setModel(modelo);
+    }
+       
+    public void comboParentesco(JComboBox<Parentesco> combo){
+        try {
+            List<Parentesco> lista = controlParen.findParentescoEntities();
+            for (Parentesco item : lista) {
+                combo.addItem(new Parentesco(
+                        item.getIdParentesco(),
+                        item.getParentesco()
+                )
+                );
+            }
+        } catch (Exception e) {
+        }
     }
 }

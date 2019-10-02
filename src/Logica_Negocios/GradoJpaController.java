@@ -18,7 +18,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import Logica_Negocios.SeccionJpaController;
 /**
  *
  * @author Amilcar
@@ -28,8 +30,11 @@ public class GradoJpaController implements Serializable {
     public GradoJpaController() {
         this.emf = Persistence.createEntityManagerFactory("ColegioPU");
     }
+    //variables
     private EntityManagerFactory emf = null;
-
+    Seccion clasSeccion = new Seccion();
+    SeccionJpaController controlSeccion = new SeccionJpaController();
+    Character varSecc;
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
@@ -171,5 +176,32 @@ public class GradoJpaController implements Serializable {
             em.close();
         }
     }
-    
+     public void mostrarGrado(JTable tabla){
+       DefaultTableModel modelo = null;
+       String[] titulo = {"ID grado", "Grado", "Seccion", "Año creacion"};
+        modelo = new DefaultTableModel(null,titulo);
+        List<Grado> lista = findGradoEntities();
+        List<Seccion> listaSec = controlSeccion.findSeccionEntities();        
+        String[] camposGrado= new String[11];
+        String id1="", id2="";
+        for (Grado item : lista) {  
+            id1=item.getIdSeccion().toString();
+            for (Seccion sec : listaSec) {
+                id2=sec.getSeccion().toString();
+                if (id1.equals(id2)) {
+                    varSecc=sec.getSeccion();
+                }                
+            }
+            camposGrado[0] = item.getIdGrado()+"";
+            camposGrado[1] = item.getGrado()+"";
+            camposGrado[2] = varSecc+"";
+            camposGrado[3] = item.getAnioCreacion()+"";
+            
+             
+            
+            modelo.addRow(camposGrado);
+        }
+        tabla.setModel(modelo);
+    }
+
 }

@@ -21,6 +21,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -244,5 +245,17 @@ public class TipoUsuarioJpaController implements Serializable {
             em.close();
         }
     }
-    
+    public void comboTipo(JComboBox<TipoUsuario> combo){
+        try {
+            List<TipoUsuario> lista = findTipoUsuarioEntities();
+            for (TipoUsuario item : lista) {
+                combo.addItem(new TipoUsuario(
+                        item.getIdTipo(),
+                        item.getTipo()
+                )
+                );
+            }
+        } catch (Exception e) {
+        }
+    }
 }

@@ -17,6 +17,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -140,6 +142,22 @@ public class MateriaJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+     public void mostrarMateria(JTable tabla){
+       DefaultTableModel modelo = null;
+       String[] titulo = {"ID materia", "Materia"};
+        modelo = new DefaultTableModel(null,titulo);
+        List<Materia> lista = findMateriaEntities();
+        String[] camposMateria = new String[11];
+        for (Materia item : lista) {
+            camposMateria[0] = item.getIdMateria()+"";
+            camposMateria[1] = item.getMateria()+"";
+
+            
+            modelo.addRow(camposMateria);
+        }
+        tabla.setModel(modelo);
     }
     
 }
