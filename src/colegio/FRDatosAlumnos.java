@@ -9,10 +9,10 @@ import Logica_Negocios.ResponsableJpaController;
  *
  * @author DELL
  */
-public class DatosAlumnos extends javax.swing.JInternalFrame {
+public class FRDatosAlumnos extends javax.swing.JInternalFrame {
 
     ResponsableJpaController controlResp = new ResponsableJpaController();
-    public DatosAlumnos() {
+    public FRDatosAlumnos() {
         initComponents();
         controlResp.mostrarResponsable(tableResp);
     }
@@ -245,13 +245,13 @@ public class DatosAlumnos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Responsable  Res = new Responsable();
+        FRResponsable  Res = new FRResponsable();
         PRINCIPAL.escritorio.add(Res);
         Res.show();// TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Matricula  Mat = new Matricula();
+        FRMatricula  Mat = new FRMatricula();
         PRINCIPAL.escritorio.add(Mat);
         Mat.show();// TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed

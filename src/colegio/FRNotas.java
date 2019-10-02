@@ -9,12 +9,12 @@ package colegio;
  *
  * @author DELL
  */
-public class Notas extends javax.swing.JInternalFrame {
+public class FRNotas extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Notas
      */
-    public Notas() {
+    public FRNotas() {
         initComponents();
     }
 

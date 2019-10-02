@@ -9,12 +9,12 @@ package colegio;
  *
  * @author DELL
  */
-public class SalonClase extends javax.swing.JInternalFrame {
+public class FRSalonClase extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form SalonClase
      */
-    public SalonClase() {
+    public FRSalonClase() {
         initComponents();
     }
 

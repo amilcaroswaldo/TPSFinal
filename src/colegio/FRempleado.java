@@ -13,12 +13,12 @@ import java.util.logging.Logger;
  *
  * @author DELL
  */
-public class empleado extends javax.swing.JInternalFrame {
+public class FRempleado extends javax.swing.JInternalFrame {
 
     UsuarioJpaController controlUsuario = new UsuarioJpaController();
     TipoUsuario classTipo = new TipoUsuario();
     Usuario classUsario = new Usuario();
-    public empleado() {
+    public FRempleado() {
         initComponents();
     }
 
@@ -241,7 +241,7 @@ public class empleado extends javax.swing.JInternalFrame {
         try {
             controlUsuario.create(classUsario);
         } catch (Exception ex) {
-            Logger.getLogger(empleado.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FRempleado.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_btnActivarActionPerformed

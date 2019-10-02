@@ -9,12 +9,12 @@ package colegio;
  *
  * @author DELL
  */
-public class AsignarMateria extends javax.swing.JInternalFrame {
+public class FRAsignarMateria extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Admin
      */
-    public AsignarMateria() {
+    public FRAsignarMateria() {
         initComponents();
     }
 

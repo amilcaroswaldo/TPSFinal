@@ -9,12 +9,12 @@ package colegio;
  *
  * @author DELL
  */
-public class Matricula extends javax.swing.JInternalFrame {
+public class FRMatricula extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Matricula
      */
-    public Matricula() {
+    public FRMatricula() {
         initComponents();
     }
 
@@ -180,13 +180,13 @@ public class Matricula extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-DatosAlumnos  Dat = new DatosAlumnos();
+FRDatosAlumnos  Dat = new FRDatosAlumnos();
         PRINCIPAL.escritorio.add(Dat);
         Dat.show();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-SalonClase  Res = new SalonClase();
+FRSalonClase  Res = new FRSalonClase();
         PRINCIPAL.escritorio.add(Res);
         Res.show();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed

@@ -10,11 +10,11 @@ import javax.swing.JOptionPane;
  *
  * @author DELL
  */
-public class Responsable extends javax.swing.JInternalFrame {
+public class FRResponsable extends javax.swing.JInternalFrame {
 
     ResponsableJpaController controlResp= new ResponsableJpaController();
     Acceso_Datos.Responsable claseResp = new Acceso_Datos.Responsable();
-    public Responsable() {
+    public FRResponsable() {
         initComponents();
     }
 

@@ -148,45 +148,45 @@ public class PRINCIPAL extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        empleado  admin = new empleado();
+        FRempleado  admin = new FRempleado();
         escritorio.add(admin);
         admin.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        SalonClase  admin = new SalonClase();
+        FRSalonClase  admin = new FRSalonClase();
         escritorio.add(admin);
         admin.show();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        Materias  admin = new Materias();
+        FRMaterias  admin = new FRMaterias();
         escritorio.add(admin);
         admin.show();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        AsignarMateria  admin = new AsignarMateria();
+        FRAsignarMateria  admin = new FRAsignarMateria();
         escritorio.add(admin);
         admin.show();// TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-         Matricula  admin = new Matricula();
+         FRMatricula  admin = new FRMatricula();
         escritorio.add(admin);
         admin.show();// TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-         Notas  admin = new Notas();
+         FRNotas  admin = new FRNotas();
         escritorio.add(admin);
         admin.show();// TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-ImprimirNotas  admin = new ImprimirNotas();
+FRImprimirNotas  admin = new FRImprimirNotas();
         escritorio.add(admin);
         admin.show();        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem7ActionPerformed
