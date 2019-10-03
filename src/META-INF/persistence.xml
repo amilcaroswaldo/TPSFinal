@@ -12,6 +12,7 @@
     <class>Acceso_Datos.TipoUsuario</class>
     <class>Acceso_Datos.Usuario</class>
     <class>Acceso_Datos.Responsable</class>
+    <class>Acceso_Datos.UsuarioMate</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
       <property name="javax.persistence.jdbc.user" value="system"/>

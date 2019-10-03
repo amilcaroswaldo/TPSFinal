@@ -6,6 +6,7 @@
 package Acceso_Datos;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,9 +15,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,6 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Materia.findByIdMateria", query = "SELECT m FROM Materia m WHERE m.idMateria = :idMateria"),
     @NamedQuery(name = "Materia.findByMateria", query = "SELECT m FROM Materia m WHERE m.materia = :materia")})
 public class Materia implements Serializable {
+    @OneToMany(mappedBy = "idMateria")
+    private Collection<UsuarioMate> usuarioMateCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -91,7 +96,16 @@ public class Materia implements Serializable {
 
     @Override
     public String toString() {
-        return "Acceso_Datos.Materia[ idMateria=" + idMateria + " ]";
+        return materia;
+    }
+
+    @XmlTransient
+    public Collection<UsuarioMate> getUsuarioMateCollection() {
+        return usuarioMateCollection;
+    }
+
+    public void setUsuarioMateCollection(Collection<UsuarioMate> usuarioMateCollection) {
+        this.usuarioMateCollection = usuarioMateCollection;
     }
     
 }

@@ -5,17 +5,33 @@
  */
 package colegio;
 
+import Acceso_Datos.Materia;
+import Acceso_Datos.Usuario;
+import Acceso_Datos.UsuarioMate;
+import Logica_Negocios.UsuarioJpaController;
+import Logica_Negocios.MateriaJpaController;
+import Logica_Negocios.UsuarioMateJpaController;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author DELL
  */
 public class FRAsignarMateria extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form Admin
-     */
+    UsuarioJpaController controlUsuario = new UsuarioJpaController();
+    MateriaJpaController controlMateria = new MateriaJpaController();
+    UsuarioMateJpaController controAddMta= new UsuarioMateJpaController();
+    Usuario classUsuario= new Usuario();
+    Materia classMateria = new Materia();
+    UsuarioMate classUsMat= new UsuarioMate();
+    Short idMateria, idUsuario;
+    String materia,profe;
+    DefaultTableModel model = new DefaultTableModel();
+    Boolean unaVez=false;
     public FRAsignarMateria() {
         initComponents();
+        controlMateria.comboMateria(ComboMaetrias);
+        controlUsuario.comboUsuario(ComboMaetsro);
     }
 
     /**
@@ -29,14 +45,14 @@ public class FRAsignarMateria extends javax.swing.JInternalFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        ComboMaetsro = new javax.swing.JComboBox();
         jLabel9 = new javax.swing.JLabel();
-        ComboMaetrias = new javax.swing.JComboBox();
+        ComboMaetrias = new javax.swing.JComboBox<Materia>();
         btnAsignar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         TableMateProfe = new javax.swing.JTable();
         btnEliminiarMateProfe = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        ComboMaetsro = new javax.swing.JComboBox<Usuario>();
 
         setClosable(true);
         setIconifiable(true);
@@ -48,29 +64,51 @@ public class FRAsignarMateria extends javax.swing.JInternalFrame {
 
         jLabel8.setText("MAESTRO");
 
-        ComboMaetsro.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
-
         jLabel9.setText("MATERIA");
 
+        ComboMaetrias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboMaetriasActionPerformed(evt);
+            }
+        });
+
         btnAsignar.setText("ASIGNAR");
+        btnAsignar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsignarActionPerformed(evt);
+            }
+        });
 
         TableMateProfe.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         TableMateProfe.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane2.setViewportView(TableMateProfe);
 
         btnEliminiarMateProfe.setText("ELIMINAR");
+        btnEliminiarMateProfe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminiarMateProfeActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("GUARDAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        ComboMaetsro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboMaetsroActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -78,12 +116,12 @@ public class FRAsignarMateria extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ComboMaetsro, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
-                        .addGap(39, 39, 39)
+                            .addComponent(jLabel8)
+                            .addComponent(ComboMaetsro, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(41, 41, 41)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(ComboMaetrias, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -106,16 +144,16 @@ public class FRAsignarMateria extends javax.swing.JInternalFrame {
                     .addComponent(jLabel9))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ComboMaetsro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ComboMaetrias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAsignar))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(ComboMaetrias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAsignar))
+                            .addComponent(ComboMaetsro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
                         .addComponent(btnEliminiarMateProfe)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
@@ -144,10 +182,58 @@ public class FRAsignarMateria extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void ComboMaetriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboMaetriasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboMaetriasActionPerformed
+
+    private void btnAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarActionPerformed
+        // TODO add your handling code here:
+        
+        if (!unaVez) {
+            unaVez=true;
+            model.addColumn("ID profesor");
+            model.addColumn("Profesor");        
+            model.addColumn("ID materia");
+            model.addColumn("Materia");
+        }        
+        materia = ComboMaetrias.getItemAt(ComboMaetrias.getSelectedIndex()).getMateria()+"";
+        profe=ComboMaetsro.getItemAt(ComboMaetsro.getSelectedIndex()).getNombre()+"";
+        idMateria=ComboMaetrias.getItemAt(ComboMaetrias.getSelectedIndex()).getIdMateria();
+        idUsuario=ComboMaetsro.getItemAt(ComboMaetsro.getSelectedIndex()).getIdUsuario();
+        model.addRow(new Object[]{idUsuario,profe,idMateria,materia});
+        TableMateProfe.setModel(model);
+        
+    }//GEN-LAST:event_btnAsignarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            for (int i = 0; i <= TableMateProfe.getRowCount(); i++) {
+                idUsuario=Short.parseShort(TableMateProfe.getValueAt(i,0)+"");
+                idMateria=Short.parseShort(TableMateProfe.getValueAt(i,2)+"");
+                classUsuario.setIdUsuario(idUsuario);
+                classMateria.setIdMateria(idMateria);
+                classUsMat.setIdMateria(classMateria);
+                classUsMat.setIdUsuario(classUsuario);
+                controAddMta.create(classUsMat);
+            }            
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnEliminiarMateProfeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminiarMateProfeActionPerformed
+        // TODO add your handling code here:
+        //modelo.removeRow(fila);
+    }//GEN-LAST:event_btnEliminiarMateProfeActionPerformed
+
+    private void ComboMaetsroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboMaetsroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboMaetsroActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox ComboMaetrias;
-    private javax.swing.JComboBox ComboMaetsro;
+    private javax.swing.JComboBox<Materia> ComboMaetrias;
+    private javax.swing.JComboBox<Usuario> ComboMaetsro;
     private javax.swing.JTable TableMateProfe;
     private javax.swing.JButton btnAsignar;
     private javax.swing.JButton btnEliminiarMateProfe;

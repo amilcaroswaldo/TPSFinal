@@ -17,6 +17,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -160,4 +161,17 @@ public class MateriaJpaController implements Serializable {
         tabla.setModel(modelo);
     }
     
+     public void comboMateria(JComboBox<Materia> combo){
+        try {
+            List<Materia> lista = findMateriaEntities();
+            for (Materia item : lista) {
+                combo.addItem(new Materia(
+                        item.getIdMateria(),
+                        item.getMateria()      
+                )
+                );
+            }
+        } catch (Exception e) {
+        }
+    }
 }

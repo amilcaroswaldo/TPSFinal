@@ -42,6 +42,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByTelefono", query = "SELECT u FROM Usuario u WHERE u.telefono = :telefono"),
     @NamedQuery(name = "Usuario.findByEstado", query = "SELECT u FROM Usuario u WHERE u.estado = :estado")})
 public class Usuario implements Serializable {
+    @OneToMany(mappedBy = "idUsuario")
+    private Collection<UsuarioMate> usuarioMateCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -83,13 +85,11 @@ public class Usuario implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public Usuario(Short idUsuario, String nombre, String apellido, String nomusuario, String pass, Character estado) {
+    public Usuario(Short idUsuario, String nombre, String apellido) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.nomusuario = nomusuario;
-        this.pass = pass;
-        this.estado = estado;
+        
     }
 
     public Short getIdUsuario() {
@@ -203,7 +203,16 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Acceso_Datos.Usuario[ idUsuario=" + idUsuario + " ]";
+        return nombre+" "+apellido;
+    }
+
+    @XmlTransient
+    public Collection<UsuarioMate> getUsuarioMateCollection() {
+        return usuarioMateCollection;
+    }
+
+    public void setUsuarioMateCollection(Collection<UsuarioMate> usuarioMateCollection) {
+        this.usuarioMateCollection = usuarioMateCollection;
     }
     
 }
