@@ -5,7 +5,7 @@
  */
 package colegio;
 
-import com.placeholder.PlaceHolder;
+//import com.placeholder.PlaceHolder;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
@@ -19,11 +19,11 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    PlaceHolder holder;
+    //PlaceHolder holder;
     public Login() {
         initComponents();
-        holder = new PlaceHolder(txtusuario, "Ingrese su usuario");
-        holder = new PlaceHolder(txtContra, "Ingrese su contraseña");
+       // holder = new PlaceHolder(txtusuario, "Ingrese su usuario");
+       // holder = new PlaceHolder(txtContra, "Ingrese su contraseña");
     }
 
     /**
