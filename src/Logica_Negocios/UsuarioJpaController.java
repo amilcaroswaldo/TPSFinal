@@ -22,7 +22,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JComboBox;
-
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import Logica_Negocios.TipoUsuarioJpaController;
 /**
  *
  * @author Amilcar
@@ -33,7 +35,7 @@ public class UsuarioJpaController implements Serializable {
         this.emf = Persistence.createEntityManagerFactory("ColegioPU");
     }
     private EntityManagerFactory emf = null;
-
+    TipoUsuarioJpaController controlTipo = new TipoUsuarioJpaController();
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
@@ -241,6 +243,44 @@ public class UsuarioJpaController implements Serializable {
             }
         } catch (Exception e) {
         }
+    }
+    
+    public void mostrarUsuario(JTable tabla){
+      DefaultTableModel modelo =null;
+        String[] titulo = {"ID Profesor","Tipo usuario", "Nombre", "Apellido", "Nombre de usuario"," Contraseña","Fecha de nacimiento", "DUI","Telefono", "Estado"};
+        modelo = new DefaultTableModel(null,titulo);
+        List<Usuario> listaUsuario = findUsuarioEntities();
+        String tipo="", tipoUsario="", tipoTUsuario="";
+        String[] camposProfesor = new String[10];
+        List<TipoUsuario> listaTipo = controlTipo.findTipoUsuarioEntities();
+        for (Usuario item : listaUsuario) {
+            tipoUsario=item.getIdTipo()+"";
+            for (TipoUsuario item2 : listaTipo) {
+                tipoTUsuario=item2.getTipo()+"";
+                if (tipoUsario.equals(tipoTUsuario)) {
+                    tipo = item2.getTipo();
+                }
+            }
+            
+                
+             if (item.getEstado().equals('A')) {
+                    camposProfesor[9] = "Activo";
+                }
+                else{
+                    camposProfesor[9] = "Inactivo";
+                }
+                camposProfesor[0]=item.getIdUsuario()+"";
+                camposProfesor[1]=tipo;
+                camposProfesor[2]=item.getNombre()+"";
+                camposProfesor[3]=item.getApellido()+"";
+                camposProfesor[4]=item.getNomusuario()+"";
+                camposProfesor[5]=item.getPass()+"";
+                camposProfesor[6]=item.getFechaNac()+"";
+                camposProfesor[7]=item.getDui()+"";
+                camposProfesor[8]=item.getTelefono()+"";
+                modelo.addRow(camposProfesor);   
+        }
+        tabla.setModel(modelo);
     }
     
 }
