@@ -9,8 +9,10 @@ import Logica_Negocios.TipoUsuarioJpaController;
 import Acceso_Datos.Usuario;
 import Acceso_Datos.TipoUsuario;
 import Logica_Negocios.exceptions.NonexistentEntityException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -23,6 +25,7 @@ public class FRempleado extends javax.swing.JInternalFrame {
     TipoUsuario classTipo = new TipoUsuario();
     Usuario classUsario = new Usuario();
     Short idTipo=0, idUser=0;
+    String tipoUserTable;
     public FRempleado() {
         initComponents();
         controlTiPo.comboTipo(comboPrivilegioEmp);
@@ -279,10 +282,10 @@ public class FRempleado extends javax.swing.JInternalFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        btnGuardar.setText("Nuevo");
+        btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -296,11 +299,6 @@ public class FRempleado extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jLabel7)
-                            .addGap(392, 392, 392)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(13, 13, 13)
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -312,9 +310,16 @@ public class FRempleado extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(610, 610, 610))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addGap(652, 652, 652))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addGap(434, 434, 434))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -373,11 +378,18 @@ public class FRempleado extends javax.swing.JInternalFrame {
         jfFechaNac.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),6)));
         txtDUiEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),7)));
         txtTelEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),8)));
-        idUser=Short.parseShort(modelo.getValueAt(tableUsuarios.getSelectedRow(),2)+"");
-        
-//        txtMateria.setText(String.valueOf(modelo.getValueAt(tableMaterias.getSelectedRow(),1)));
-//         id=Short.parseShort(modelo.getValueAt(tableMaterias.getSelectedRow(),0).toString());
-//        clasMateria.setIdMateria(id);
+        idUser=Short.parseShort(modelo.getValueAt(tableUsuarios.getSelectedRow(),0)+"");
+        tipoUserTable = String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),1));
+
+        if (tipoUserTable.equals("Administrador")) {
+            comboPrivilegioEmp.setSelectedIndex(0);
+        }
+         else if (tipoUserTable.equals("Docente")) {
+            comboPrivilegioEmp.setSelectedIndex(1);
+        }
+        else {
+            comboPrivilegioEmp.setSelectedIndex(2);
+        }
     }//GEN-LAST:event_tableUsuariosMouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -385,18 +397,20 @@ public class FRempleado extends javax.swing.JInternalFrame {
         try {
             idTipo= comboPrivilegioEmp.getItemAt(comboPrivilegioEmp.getSelectedIndex()).getIdTipo();
             classTipo.setIdTipo(idTipo);
+            classUsario.setIdUsuario(idUser);
             classUsario.setNombre(txtNombreEmp.getText()+"");
             classUsario.setApellido(txtApellidoEmp.getText()+"");
             classUsario.setDui(txtDUiEmp.getText()+"");
             classUsario.setFechaNac(jfFechaNac.getText()+"");
             classUsario.setIdTipo(classTipo);
-            classUsario.setPass(txtContraEmp.getSelectedText()+"");
+            classUsario.setPass(txtContraEmp.getPassword()+"");
             classUsario.setEstado('A');
-            classUsario.setNomusuario(txtNombreEmp.getText()+"");
+            classUsario.setNomusuario(txtUsuarioEmp.getText()+"");
             classUsario.setTelefono(txtTelEmp.getText()+"");
             controlUsuario.edit(classUsario);
             controlUsuario.mostrarUsuario(tableUsuarios);
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error "+e.getMessage());
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
