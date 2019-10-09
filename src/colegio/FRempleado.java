@@ -26,6 +26,7 @@ public class FRempleado extends javax.swing.JInternalFrame {
     Usuario classUsario = new Usuario();
     Short idTipo=0, idUser=0;
     String tipoUserTable;
+    
     public FRempleado() {
         initComponents();
         controlTiPo.comboTipo(comboPrivilegioEmp);
@@ -54,8 +55,6 @@ public class FRempleado extends javax.swing.JInternalFrame {
         txtDUiEmp = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         txtTelEmp = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        txtDirecEmp = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         txtContraEmp = new javax.swing.JPasswordField();
@@ -101,8 +100,6 @@ public class FRempleado extends javax.swing.JInternalFrame {
 
         jLabel11.setText("Teléfono:");
 
-        jLabel10.setText("Dirección:");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -112,27 +109,21 @@ public class FRempleado extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel10))
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jfFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtApellidoEmp)
+                    .addComponent(txtNombreEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jfFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtApellidoEmp)
-                            .addComponent(txtNombreEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel9))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtTelEmp, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-                            .addComponent(txtDUiEmp))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(txtDirecEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 23, Short.MAX_VALUE))))
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel9))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtTelEmp, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                    .addComponent(txtDUiEmp))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,11 +144,7 @@ public class FRempleado extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jfFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(txtDirecEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos de Cuenta"));
@@ -369,8 +356,8 @@ public class FRempleado extends javax.swing.JInternalFrame {
 
     private void tableUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableUsuariosMouseClicked
         // TODO add your handling code here:
-        
         DefaultTableModel modelo = (DefaultTableModel) tableUsuarios.getModel();
+        
         txtNombreEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),2)));
         txtApellidoEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),3)));
         txtUsuarioEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),4)));
@@ -380,7 +367,6 @@ public class FRempleado extends javax.swing.JInternalFrame {
         txtTelEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),8)));
         idUser=Short.parseShort(modelo.getValueAt(tableUsuarios.getSelectedRow(),0)+"");
         tipoUserTable = String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),1));
-
         if (tipoUserTable.equals("Administrador")) {
             comboPrivilegioEmp.setSelectedIndex(0);
         }
@@ -393,7 +379,7 @@ public class FRempleado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tableUsuariosMouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:        
+        // TODO add your handling code here:         
         try {
             idTipo= comboPrivilegioEmp.getItemAt(comboPrivilegioEmp.getSelectedIndex()).getIdTipo();
             classTipo.setIdTipo(idTipo);
@@ -403,25 +389,44 @@ public class FRempleado extends javax.swing.JInternalFrame {
             classUsario.setDui(txtDUiEmp.getText()+"");
             classUsario.setFechaNac(jfFechaNac.getText()+"");
             classUsario.setIdTipo(classTipo);
-            classUsario.setPass(txtContraEmp.getPassword()+"");
+            classUsario.setPass(txtContraEmp.getPassword()+"");            
             classUsario.setEstado('A');
             classUsario.setNomusuario(txtUsuarioEmp.getText()+"");
             classUsario.setTelefono(txtTelEmp.getText()+"");
             controlUsuario.edit(classUsario);
             controlUsuario.mostrarUsuario(tableUsuarios);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error "+e.getMessage());
+            
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FRempleado.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error"+ ex.getMessage());
         }
+            
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         try {
-            // TODO add your handling code here:
-
-            controlUsuario.destroy(idUser);
+            DefaultTableModel modelo = (DefaultTableModel) tableUsuarios.getModel();
+            idTipo= comboPrivilegioEmp.getItemAt(comboPrivilegioEmp.getSelectedIndex()).getIdTipo();
+            classTipo.setIdTipo(idTipo);
+            classUsario.setIdUsuario(idUser);
+            classUsario.setNombre(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),2)));
+            classUsario.setApellido(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),3)));
+            classUsario.setDui(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),7)));
+            classUsario.setFechaNac(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),6)));
+            classUsario.setIdTipo(classTipo);
+            String valorPass = new String(txtContraEmp.getPassword());
+            classUsario.setPass(valorPass);
+            classUsario.setEstado('I');
+            classUsario.setNomusuario(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),4)));
+            classUsario.setTelefono(txtTelEmp.getText()+"");
+            controlUsuario.edit(classUsario);
             controlUsuario.mostrarUsuario(tableUsuarios);
-        } catch (NonexistentEntityException ex) {
+            
+        } catch (Exception ex) {
             Logger.getLogger(FRempleado.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error"+ ex.getMessage());
         }
         
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -433,7 +438,6 @@ public class FRempleado extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -454,7 +458,6 @@ public class FRempleado extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtApellidoEmp;
     private javax.swing.JPasswordField txtContraEmp;
     private javax.swing.JTextField txtDUiEmp;
-    private javax.swing.JTextField txtDirecEmp;
     private javax.swing.JTextField txtNombreEmp;
     private javax.swing.JTextField txtTelEmp;
     private javax.swing.JTextField txtUsuarioEmp;

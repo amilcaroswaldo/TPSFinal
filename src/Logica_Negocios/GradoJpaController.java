@@ -21,6 +21,7 @@ import javax.persistence.Persistence;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import Logica_Negocios.SeccionJpaController;
+import javax.swing.JComboBox;
 /**
  *
  * @author Amilcar
@@ -203,5 +204,20 @@ public class GradoJpaController implements Serializable {
         }
         tabla.setModel(modelo);
     }
-
+     
+  public void comboGrado(JComboBox<Grado> combo){
+        try {
+            List<Grado> lista = findGradoEntities();
+            for (Grado item : lista) {
+                combo.addItem(new Grado(
+                        item.getIdGrado(),
+                        item.getGrado(),
+                        item.getAnioCreacion(),
+                        item.getIdSeccion()
+                )
+                );
+            }
+        } catch (Exception e) {
+        }
+    }
 }

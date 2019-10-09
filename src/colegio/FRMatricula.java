@@ -4,18 +4,29 @@
  * and open the template in the editor.
  */
 package colegio;
-
+import Acceso_Datos.Grado;
+import Logica_Negocios.AlumnoJpaController;
+import Logica_Negocios.GradoJpaController;
+import javax.swing.table.DefaultTableModel;
+import Logica_Negocios.Matricula;
+import Acceso_Datos.VariablesCompartidas;
+import javax.swing.JOptionPane;
 /**
  *
  * @author DELL
  */
 public class FRMatricula extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form Matricula
-     */
+    AlumnoJpaController controlAlum = new AlumnoJpaController();
+    GradoJpaController controlGrado = new GradoJpaController();
+    VariablesCompartidas vars = new VariablesCompartidas();
+    Matricula controlMatri = new Matricula();
+    Short idAlum = 0, idGrado=0, idSecc=0;
     public FRMatricula() {
         initComponents();
+        controlAlum.mostrarAlumno(tableAlumno);
+        controlGrado.comboGrado(cbxGrado);
+        
     }
 
     /**
@@ -32,15 +43,15 @@ public class FRMatricula extends javax.swing.JInternalFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableAlumno = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox();
+        cbxGrado = new javax.swing.JComboBox<Grado>();
         jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblNombreAlum = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tableAlumsGrado = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        checkPago = new javax.swing.JCheckBox();
 
         setClosable(true);
         setIconifiable(true);
@@ -58,18 +69,23 @@ public class FRMatricula extends javax.swing.JInternalFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableAlumno.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tableAlumno.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableAlumnoMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tableAlumno);
 
         jButton2.setText("NUEVO");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -78,28 +94,49 @@ public class FRMatricula extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxGrado.setModel(new javax.swing.DefaultComboBoxModel(new String[] {}));
+        cbxGrado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cbxGradoMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cbxGradoMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                cbxGradoMousePressed(evt);
+            }
+        });
 
         jLabel3.setText("GRADO:");
 
-        jLabel2.setText("AQUI SE CARGA EL NOMBRE");
+        lblNombreAlum.setText("--");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tableAlumsGrado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tableAlumsGrado);
 
         jButton3.setText("MATRICULAR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
-        jCheckBox1.setText("CANCELO MATRICULA");
+        checkPago.setText("CANCELO MATRICULA");
+        checkPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkPagoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -111,24 +148,28 @@ public class FRMatricula extends javax.swing.JInternalFrame {
                         .addGap(23, 23, 23)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel2))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                                 .addComponent(jButton1))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jCheckBox1)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(checkPago)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(lblNombreAlum, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbxGrado, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2)
+                                .addGap(43, 43, 43))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(196, 196, 196)
                         .addComponent(jButton3)))
@@ -149,17 +190,17 @@ public class FRMatricula extends javax.swing.JInternalFrame {
                         .addGap(27, 27, 27)
                         .addComponent(jButton1)))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
+                .addComponent(lblNombreAlum)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxGrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
-                .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(checkPago)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addContainerGap())
         );
@@ -196,21 +237,65 @@ FRSalonClase  Res = new FRSalonClase();
         Res.show();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void tableAlumnoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableAlumnoMouseClicked
+        // TODO add your handling code here:
+         DefaultTableModel modelo = (DefaultTableModel) tableAlumno.getModel();
+         idAlum=Short.parseShort(modelo.getValueAt(tableAlumno.getSelectedRow(),0)+"");
+         lblNombreAlum.setText("Id: "+modelo.getValueAt(tableAlumno.getSelectedRow(),0)+" "
+                                + modelo.getValueAt(tableAlumno.getSelectedRow(),2)+" "
+                                + modelo.getValueAt(tableAlumno.getSelectedRow(),3)+"");
+    }//GEN-LAST:event_tableAlumnoMouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if (checkPago.isSelected()) {
+            idGrado= cbxGrado.getItemAt(cbxGrado.getSelectedIndex()).getIdGrado();
+           // controlMatri.matricular(vars.getIdProfesor(), idAlum, idGrado);
+            controlMatri.matricular(2, idAlum, idGrado);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "No ha hecho el pago de la matricula");
+        }
+        
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void cbxGradoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbxGradoMouseClicked
+        // TODO add your handling code here:
+        idGrado= cbxGrado.getItemAt(cbxGrado.getSelectedIndex()).getIdGrado();
+        controlMatri.mostrarAlumnosGrado(tableAlumsGrado, idGrado);
+    }//GEN-LAST:event_cbxGradoMouseClicked
+
+    private void cbxGradoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbxGradoMouseExited
+        // TODO add your handling code here:
+//         idGrado= cbxGrado.getItemAt(cbxGrado.getSelectedIndex()).getIdGrado();
+//        controlMatri.mostrarAlumnosGrado(tableAlumsGrado, idGrado);
+    }//GEN-LAST:event_cbxGradoMouseExited
+
+    private void cbxGradoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbxGradoMousePressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_cbxGradoMousePressed
+
+    private void checkPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkPagoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkPagoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<Grado> cbxGrado;
+    private javax.swing.JCheckBox checkPago;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lblNombreAlum;
+    private javax.swing.JTable tableAlumno;
+    private javax.swing.JTable tableAlumsGrado;
     // End of variables declaration//GEN-END:variables
 }

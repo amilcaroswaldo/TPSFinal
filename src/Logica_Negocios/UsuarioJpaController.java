@@ -24,7 +24,7 @@ import javax.persistence.Persistence;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import Logica_Negocios.TipoUsuarioJpaController;
+
 /**
  *
  * @author Amilcar
@@ -94,45 +94,45 @@ public class UsuarioJpaController implements Serializable {
             Usuario persistentUsuario = em.find(Usuario.class, usuario.getIdUsuario());
             TipoUsuario idTipoOld = persistentUsuario.getIdTipo();
             TipoUsuario idTipoNew = usuario.getIdTipo();
-            Collection<HistorialTrabajador> historialTrabajadorCollectionOld = persistentUsuario.getHistorialTrabajadorCollection();
-            Collection<HistorialTrabajador> historialTrabajadorCollectionNew = usuario.getHistorialTrabajadorCollection();
+//            Collection<HistorialTrabajador> historialTrabajadorCollectionOld = persistentUsuario.getHistorialTrabajadorCollection();
+//            Collection<HistorialTrabajador> historialTrabajadorCollectionNew = usuario.getHistorialTrabajadorCollection();
             if (idTipoNew != null) {
                 idTipoNew = em.getReference(idTipoNew.getClass(), idTipoNew.getIdTipo());
                 usuario.setIdTipo(idTipoNew);
             }
-            Collection<HistorialTrabajador> attachedHistorialTrabajadorCollectionNew = new ArrayList<HistorialTrabajador>();
-            for (HistorialTrabajador historialTrabajadorCollectionNewHistorialTrabajadorToAttach : historialTrabajadorCollectionNew) {
-                historialTrabajadorCollectionNewHistorialTrabajadorToAttach = em.getReference(historialTrabajadorCollectionNewHistorialTrabajadorToAttach.getClass(), historialTrabajadorCollectionNewHistorialTrabajadorToAttach.getIdHistorialTrabajador());
-                attachedHistorialTrabajadorCollectionNew.add(historialTrabajadorCollectionNewHistorialTrabajadorToAttach);
-            }
-            historialTrabajadorCollectionNew = attachedHistorialTrabajadorCollectionNew;
-            usuario.setHistorialTrabajadorCollection(historialTrabajadorCollectionNew);
+//            Collection<HistorialTrabajador> attachedHistorialTrabajadorCollectionNew = new ArrayList<HistorialTrabajador>();
+//            for (HistorialTrabajador historialTrabajadorCollectionNewHistorialTrabajadorToAttach : historialTrabajadorCollectionNew) {
+//                historialTrabajadorCollectionNewHistorialTrabajadorToAttach = em.getReference(historialTrabajadorCollectionNewHistorialTrabajadorToAttach.getClass(), historialTrabajadorCollectionNewHistorialTrabajadorToAttach.getIdHistorialTrabajador());
+//                attachedHistorialTrabajadorCollectionNew.add(historialTrabajadorCollectionNewHistorialTrabajadorToAttach);
+//            }
+//            historialTrabajadorCollectionNew = attachedHistorialTrabajadorCollectionNew;
+//            usuario.setHistorialTrabajadorCollection(historialTrabajadorCollectionNew);
             usuario = em.merge(usuario);
-            if (idTipoOld != null && !idTipoOld.equals(idTipoNew)) {
-                idTipoOld.getUsuarioCollection().remove(usuario);
-                idTipoOld = em.merge(idTipoOld);
-            }
-            if (idTipoNew != null && !idTipoNew.equals(idTipoOld)) {
-                idTipoNew.getUsuarioCollection().add(usuario);
-                idTipoNew = em.merge(idTipoNew);
-            }
-            for (HistorialTrabajador historialTrabajadorCollectionOldHistorialTrabajador : historialTrabajadorCollectionOld) {
-                if (!historialTrabajadorCollectionNew.contains(historialTrabajadorCollectionOldHistorialTrabajador)) {
-                    historialTrabajadorCollectionOldHistorialTrabajador.setIdUsuario(null);
-                    historialTrabajadorCollectionOldHistorialTrabajador = em.merge(historialTrabajadorCollectionOldHistorialTrabajador);
-                }
-            }
-            for (HistorialTrabajador historialTrabajadorCollectionNewHistorialTrabajador : historialTrabajadorCollectionNew) {
-                if (!historialTrabajadorCollectionOld.contains(historialTrabajadorCollectionNewHistorialTrabajador)) {
-                    Usuario oldIdUsuarioOfHistorialTrabajadorCollectionNewHistorialTrabajador = historialTrabajadorCollectionNewHistorialTrabajador.getIdUsuario();
-                    historialTrabajadorCollectionNewHistorialTrabajador.setIdUsuario(usuario);
-                    historialTrabajadorCollectionNewHistorialTrabajador = em.merge(historialTrabajadorCollectionNewHistorialTrabajador);
-                    if (oldIdUsuarioOfHistorialTrabajadorCollectionNewHistorialTrabajador != null && !oldIdUsuarioOfHistorialTrabajadorCollectionNewHistorialTrabajador.equals(usuario)) {
-                        oldIdUsuarioOfHistorialTrabajadorCollectionNewHistorialTrabajador.getHistorialTrabajadorCollection().remove(historialTrabajadorCollectionNewHistorialTrabajador);
-                        oldIdUsuarioOfHistorialTrabajadorCollectionNewHistorialTrabajador = em.merge(oldIdUsuarioOfHistorialTrabajadorCollectionNewHistorialTrabajador);
-                    }
-                }
-            }
+//            if (idTipoOld != null && !idTipoOld.equals(idTipoNew)) {
+//                idTipoOld.getUsuarioCollection().remove(usuario);
+//                idTipoOld = em.merge(idTipoOld);
+//            }
+//            if (idTipoNew != null && !idTipoNew.equals(idTipoOld)) {
+//                idTipoNew.getUsuarioCollection().add(usuario);
+//                idTipoNew = em.merge(idTipoNew);
+//            }
+//            for (HistorialTrabajador historialTrabajadorCollectionOldHistorialTrabajador : historialTrabajadorCollectionOld) {
+//                if (!historialTrabajadorCollectionNew.contains(historialTrabajadorCollectionOldHistorialTrabajador)) {
+//                    historialTrabajadorCollectionOldHistorialTrabajador.setIdUsuario(null);
+//                    historialTrabajadorCollectionOldHistorialTrabajador = em.merge(historialTrabajadorCollectionOldHistorialTrabajador);
+//                }
+//            }
+//            for (HistorialTrabajador historialTrabajadorCollectionNewHistorialTrabajador : historialTrabajadorCollectionNew) {
+//                if (!historialTrabajadorCollectionOld.contains(historialTrabajadorCollectionNewHistorialTrabajador)) {
+//                    Usuario oldIdUsuarioOfHistorialTrabajadorCollectionNewHistorialTrabajador = historialTrabajadorCollectionNewHistorialTrabajador.getIdUsuario();
+//                    historialTrabajadorCollectionNewHistorialTrabajador.setIdUsuario(usuario);
+//                    historialTrabajadorCollectionNewHistorialTrabajador = em.merge(historialTrabajadorCollectionNewHistorialTrabajador);
+//                    if (oldIdUsuarioOfHistorialTrabajadorCollectionNewHistorialTrabajador != null && !oldIdUsuarioOfHistorialTrabajadorCollectionNewHistorialTrabajador.equals(usuario)) {
+//                        oldIdUsuarioOfHistorialTrabajadorCollectionNewHistorialTrabajador.getHistorialTrabajadorCollection().remove(historialTrabajadorCollectionNewHistorialTrabajador);
+//                        oldIdUsuarioOfHistorialTrabajadorCollectionNewHistorialTrabajador = em.merge(oldIdUsuarioOfHistorialTrabajadorCollectionNewHistorialTrabajador);
+//                    }
+//                }
+//            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -167,11 +167,11 @@ public class UsuarioJpaController implements Serializable {
                 idTipo.getUsuarioCollection().remove(usuario);
                 idTipo = em.merge(idTipo);
             }
-            Collection<HistorialTrabajador> historialTrabajadorCollection = usuario.getHistorialTrabajadorCollection();
-            for (HistorialTrabajador historialTrabajadorCollectionHistorialTrabajador : historialTrabajadorCollection) {
-                historialTrabajadorCollectionHistorialTrabajador.setIdUsuario(null);
-                historialTrabajadorCollectionHistorialTrabajador = em.merge(historialTrabajadorCollectionHistorialTrabajador);
-            }
+//            Collection<HistorialTrabajador> historialTrabajadorCollection = usuario.getHistorialTrabajadorCollection();
+//            for (HistorialTrabajador historialTrabajadorCollectionHistorialTrabajador : historialTrabajadorCollection) {
+//                historialTrabajadorCollectionHistorialTrabajador.setIdUsuario(null);
+//                historialTrabajadorCollectionHistorialTrabajador = em.merge(historialTrabajadorCollectionHistorialTrabajador);
+//            }
             em.remove(usuario);
             em.getTransaction().commit();
         } finally {
@@ -264,12 +264,7 @@ public class UsuarioJpaController implements Serializable {
             
                 
              if (item.getEstado().equals('A')) {
-                    camposProfesor[9] = "Activo";
-                }
-                else{
-                    camposProfesor[9] = "Inactivo";
-                }
-                camposProfesor[0]=item.getIdUsuario()+"";
+                  camposProfesor[0]=item.getIdUsuario()+"";
                 camposProfesor[1]=tipo;
                 camposProfesor[2]=item.getNombre()+"";
                 camposProfesor[3]=item.getApellido()+"";
@@ -278,7 +273,11 @@ public class UsuarioJpaController implements Serializable {
                 camposProfesor[6]=item.getFechaNac()+"";
                 camposProfesor[7]=item.getDui()+"";
                 camposProfesor[8]=item.getTelefono()+"";
-                modelo.addRow(camposProfesor);   
+                camposProfesor[9] = "Activo";
+                modelo.addRow(camposProfesor); 
+                   
+                }
+                 
         }
         tabla.setModel(modelo);
     }

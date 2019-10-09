@@ -19,6 +19,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -26,6 +28,9 @@ import javax.persistence.Persistence;
  */
 public class AlumnoJpaController implements Serializable {
 
+    // variables
+    ParentescoJpaController controlParentesco = new ParentescoJpaController();
+    ResponsableJpaController controlResp = new ResponsableJpaController();
     public AlumnoJpaController() {
         this.emf = Persistence.createEntityManagerFactory("ColegioPU");
     }
@@ -201,4 +206,32 @@ public class AlumnoJpaController implements Serializable {
         }
     }
     
+    public void mostrarAlumno(JTable tabla){
+       DefaultTableModel modelo = null;
+       String[] titulo = {"ID Alumno", "Responsable", "Nombre", "Apellido","Fecha de nacimiento", "Problemas de salud","Parentesco"};
+        modelo = new DefaultTableModel(null,titulo);
+        List<Alumno> lista = findAlumnoEntities();
+        List<Responsable> listaResp = controlResp.findResponsableEntities();
+        String  responsable="", item1R, item2R;
+        String[] camposRepresentante = new String[11];        
+        for (Alumno item : lista) {         
+            for (Responsable item3 : listaResp) {
+                 item1R=item.getIdResponsable()+"";
+                 item2R=item3.getIdResponsable()+"";
+                if (item1R.equals(item2R)) {
+                    responsable= item3.getNombre()+item3.getApellido();
+                }
+            }
+            camposRepresentante[0] = item.getIdAlumno()+"";
+            camposRepresentante[1] = responsable;
+            camposRepresentante[2] = item.getNombre()+"";
+            camposRepresentante[3] = item.getApellido()+"";
+            camposRepresentante[4] = item.getFechaNacimiento()+"";
+            camposRepresentante[5] = item.getProblemasSalud()+"";
+            camposRepresentante[6] =item.getIdParentesco()+"";
+            
+            modelo.addRow(camposRepresentante);
+        }
+        tabla.setModel(modelo);
+    }
 }

@@ -150,7 +150,7 @@ public class Alumno implements Serializable {
 
     @Override
     public String toString() {
-        return "Acceso_Datos.Alumno[ idAlumno=" + idAlumno + " ]";
+        return idAlumno+"";
     }
     
 }

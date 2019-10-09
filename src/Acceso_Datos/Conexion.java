@@ -20,7 +20,7 @@ public class Conexion {
     private static final String  clave = "admin";
     private static final String  url = "jdbc:oracle:thin:@localhost:1521:XE";
     
-    public static Connection getConnection() throws SQLException{
+    public Connection getConnection() throws SQLException{
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             conn=DriverManager.getConnection(url,login,clave);

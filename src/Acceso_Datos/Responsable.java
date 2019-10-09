@@ -197,7 +197,7 @@ public class Responsable implements Serializable {
 
     @Override
     public String toString() {
-        return "Acceso_Datos.Responsable[ idResponsable=" + idResponsable + " ]";
+        return  idResponsable + "";
     }
     
 }

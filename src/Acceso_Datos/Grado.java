@@ -58,10 +58,11 @@ public class Grado implements Serializable {
         this.grado=grado;
     }
 
-    public Grado(Short idGrado, String grado, String anioCreacion) {
+    public Grado(Short idGrado, String grado, String anioCreacion, Seccion idSecccion) {
         this.idGrado = idGrado;
         this.grado = grado;
         this.anioCreacion = anioCreacion;
+        this.idSeccion = idSecccion;
     }
 
     public Short getIdGrado() {
@@ -118,7 +119,7 @@ public class Grado implements Serializable {
 
     @Override
     public String toString() {
-        return grado;
+        return grado+" sección " + idSeccion+"";
     }
     
 }
