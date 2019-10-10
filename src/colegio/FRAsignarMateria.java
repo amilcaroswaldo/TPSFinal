@@ -12,6 +12,7 @@ import Logica_Negocios.UsuarioJpaController;
 import Logica_Negocios.MateriaJpaController;
 import Logica_Negocios.UsuarioMateJpaController;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author DELL
@@ -20,14 +21,14 @@ public class FRAsignarMateria extends javax.swing.JInternalFrame {
 
     UsuarioJpaController controlUsuario = new UsuarioJpaController();
     MateriaJpaController controlMateria = new MateriaJpaController();
-    UsuarioMateJpaController controAddMta= new UsuarioMateJpaController();
-    Usuario classUsuario= new Usuario();
-    Materia classMateria = new Materia();
-    UsuarioMate classUsMat= new UsuarioMate();
+    UsuarioMateJpaController controAddMta = new UsuarioMateJpaController();
+
+    UsuarioMate classUsMat = new UsuarioMate();
     Short idMateria, idUsuario;
-    String materia,profe;
+    String materia, profe;
     DefaultTableModel model = new DefaultTableModel();
-    Boolean unaVez=false;
+    Boolean unaVez = false;
+
     public FRAsignarMateria() {
         initComponents();
         controlMateria.comboMateria(ComboMaetrias);
@@ -188,35 +189,37 @@ public class FRAsignarMateria extends javax.swing.JInternalFrame {
 
     private void btnAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarActionPerformed
         // TODO add your handling code here:
-        
+
         if (!unaVez) {
-            unaVez=true;
+            unaVez = true;
             model.addColumn("ID profesor");
-            model.addColumn("Profesor");        
+            model.addColumn("Profesor");
             model.addColumn("ID materia");
             model.addColumn("Materia");
-        }        
-        materia = ComboMaetrias.getItemAt(ComboMaetrias.getSelectedIndex()).getMateria()+"";
-        profe=ComboMaetsro.getItemAt(ComboMaetsro.getSelectedIndex()).getNombre()+"";
-        idMateria=ComboMaetrias.getItemAt(ComboMaetrias.getSelectedIndex()).getIdMateria();
-        idUsuario=ComboMaetsro.getItemAt(ComboMaetsro.getSelectedIndex()).getIdUsuario();
-        model.addRow(new Object[]{idUsuario,profe,idMateria,materia});
+        }
+        materia = ComboMaetrias.getItemAt(ComboMaetrias.getSelectedIndex()).getMateria() + "";
+        profe = ComboMaetsro.getItemAt(ComboMaetsro.getSelectedIndex()).getNombre() + "";
+        idMateria = ComboMaetrias.getItemAt(ComboMaetrias.getSelectedIndex()).getIdMateria();
+        idUsuario = ComboMaetsro.getItemAt(ComboMaetsro.getSelectedIndex()).getIdUsuario();
+        model.addRow(new Object[]{idUsuario, profe, idMateria, materia});
         TableMateProfe.setModel(model);
-        
+
     }//GEN-LAST:event_btnAsignarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
             for (int i = 0; i <= TableMateProfe.getRowCount(); i++) {
-                idUsuario=Short.parseShort(TableMateProfe.getValueAt(i,0)+"");
-                idMateria=Short.parseShort(TableMateProfe.getValueAt(i,2)+"");
+                Usuario classUsuario = new Usuario();
+                Materia classMateria = new Materia();
+                idUsuario = Short.parseShort(TableMateProfe.getValueAt(i, 0) + "");
+                idMateria = Short.parseShort(TableMateProfe.getValueAt(i, 2) + "");
                 classUsuario.setIdUsuario(idUsuario);
                 classMateria.setIdMateria(idMateria);
                 classUsMat.setIdMateria(classMateria);
                 classUsMat.setIdUsuario(classUsuario);
                 controAddMta.create(classUsMat);
-            }            
+            }
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jButton1ActionPerformed

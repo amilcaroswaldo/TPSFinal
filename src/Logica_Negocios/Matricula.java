@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,23 +27,26 @@ import javax.swing.table.DefaultTableModel;
 public class Matricula {
 
     ClassMatricula classMatri = new ClassMatricula();
-    Conexion conn = new Conexion();
-    //CallableStatement cst;
+    Conexion conn;
     ResultSet rs;
     Statement sentence;
+
+    public Matricula() {
+        conn = new Conexion();
+    }
 
     public void matricular(int idProfe, int idAlum, int grado) {
         try {
             //forma 1
-//            PreparedStatement pS = conn.getConnection().prepareStatement("{CALC materia_pago_matricula (?,?,?)}");
+//            PreparedStatement pS = conn.getConnection().prepareStatement("{CALl materia_pago_matricula (?,?,?)}");
 //            pS.setInt(1, idProfe );
 //            pS.setInt(2, idAlum );
 //            pS.setInt(3, grado);
 //            rs= pS.executeQuery();
-            
+
             //forma2
             Connection cn = conn.getConnection();
-            CallableStatement cst = cn.prepareCall("{CALC materia_pago_matricula (?,?,?)}");
+            CallableStatement cst = conn.getConnection().prepareCall("{call materia_pago_matricula(?,?,?)}");
             cst.setInt(1, idProfe);
             cst.setInt(2, idAlum);
             cst.setInt(3, grado);
@@ -58,6 +62,7 @@ public class Matricula {
 //            cst.registerOutParameter(3, grado);
 //            cst.execute();
         } catch (Exception e) {
+             JOptionPane.showMessageDialog(null, "Conexion erronea"+e.getMessage());
         }
     }
 

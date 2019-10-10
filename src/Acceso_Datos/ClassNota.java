@@ -9,7 +9,7 @@ package Acceso_Datos;
  *
  * @author Amilcar
  */
-public class Nota {
+public class ClassNota {
     int idNota;
    int idAlumno;
    int idPeriodo;
@@ -20,10 +20,10 @@ public class Nota {
    double nota2;
    double nota3;
 
-    public Nota() {
+    public ClassNota() {
     }
 
-    public Nota(int idNota, int idAlumno, int idPeriodo, int idUsuarioMate, int idUsuario, int idUsuaMate, double nota1, double nota2, double nota3) {
+    public ClassNota(int idNota, int idAlumno, int idPeriodo, int idUsuarioMate, int idUsuario, int idUsuaMate, double nota1, double nota2, double nota3) {
         this.idNota = idNota;
         this.idAlumno = idAlumno;
         this.idPeriodo = idPeriodo;

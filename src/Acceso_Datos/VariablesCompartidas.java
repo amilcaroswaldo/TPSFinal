@@ -12,21 +12,23 @@ package Acceso_Datos;
 public class VariablesCompartidas {
 
 
-    int idProfesor=0;
-
-    public VariablesCompartidas() {
-    }
+    String idProfesor;
 
     @Override
     public String toString() {
         return "VariablesCompartidas{" + "idProfesor=" + idProfesor + '}';
     }
 
-    public int getIdProfesor() {
+    public String getIdProfesor() {
         return idProfesor;
     }
 
-    public void setIdProfesor(int idProfesor) {
+    public void setIdProfesor(String idProfesor) {
         this.idProfesor = idProfesor;
     }
+
+    public VariablesCompartidas() {
+    }
+
+   
 }

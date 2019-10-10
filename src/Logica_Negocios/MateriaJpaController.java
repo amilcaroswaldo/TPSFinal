@@ -20,6 +20,7 @@ import javax.persistence.criteria.Root;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import Acceso_Datos.UsuarioMate;
 
 /**
  *
@@ -31,6 +32,8 @@ public class MateriaJpaController implements Serializable {
         this.emf = Persistence.createEntityManagerFactory("ColegioPU");
     }
     private EntityManagerFactory emf = null;
+    UsuarioMateJpaController controUsMat = new UsuarioMateJpaController();
+    UsuarioMate classUsMate = new UsuarioMate();
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
@@ -144,32 +147,52 @@ public class MateriaJpaController implements Serializable {
             em.close();
         }
     }
-    
-     public void mostrarMateria(JTable tabla){
-       DefaultTableModel modelo = null;
-       String[] titulo = {"ID materia", "Materia"};
-        modelo = new DefaultTableModel(null,titulo);
+
+    public void mostrarMateria(JTable tabla) {
+        DefaultTableModel modelo = null;
+        String[] titulo = {"ID materia", "Materia"};
+        modelo = new DefaultTableModel(null, titulo);
         List<Materia> lista = findMateriaEntities();
         String[] camposMateria = new String[11];
         for (Materia item : lista) {
-            camposMateria[0] = item.getIdMateria()+"";
-            camposMateria[1] = item.getMateria()+"";
+            camposMateria[0] = item.getIdMateria() + "";
+            camposMateria[1] = item.getMateria() + "";
 
-            
             modelo.addRow(camposMateria);
         }
         tabla.setModel(modelo);
     }
-    
-     public void comboMateria(JComboBox<Materia> combo){
+
+    public void comboMateria(JComboBox<Materia> combo) {
         try {
             List<Materia> lista = findMateriaEntities();
             for (Materia item : lista) {
                 combo.addItem(new Materia(
                         item.getIdMateria(),
-                        item.getMateria()      
+                        item.getMateria()
                 )
                 );
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    public void comboMateriaProfesor(JComboBox<Materia> combo, Short idProf) {
+        try {
+            List<Materia> lista = findMateriaEntities();
+            List<UsuarioMate> listaUsMa = controUsMat.findUsuarioMateEntities();
+            for (Materia item : lista) {
+                for (UsuarioMate item2 : listaUsMa) {
+                    String prueba =item2.getIdUsuario().getIdUsuario().toString();
+                    if (item2.getIdUsuario().getIdUsuario().equals(idProf)) {
+                        combo.addItem(new Materia(
+                                item.getIdMateria(),
+                                item.getMateria()
+                        )
+                        );
+                    }
+                }
+
             }
         } catch (Exception e) {
         }
