@@ -5,6 +5,8 @@
  */
 package colegio;
 
+import javax.swing.JInternalFrame;
+
 /**
  *
  * @author DELL
@@ -185,6 +187,18 @@ public class PRINCIPAL extends javax.swing.JFrame {
         admin.show();// TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    public void Centrar (JInternalFrame internalFrame){
+        int x = (escritorio.getWidth())- internalFrame.getWidth()/2;
+        int y = (escritorio.getWidth())- internalFrame.getWidth()/2;
+        if (internalFrame.isShowing()){
+            internalFrame.setLocation(x,y);
+            
+        }else {
+            escritorio.add(internalFrame);
+            internalFrame.setLocation(x,y);
+            internalFrame.show();
+        }
+    }
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
 FRImprimirNotas  admin = new FRImprimirNotas();
         escritorio.add(admin);
