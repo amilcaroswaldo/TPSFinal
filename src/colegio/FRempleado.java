@@ -362,7 +362,7 @@ public class FRempleado extends javax.swing.JInternalFrame {
         classUsario.setDui(txtDUiEmp.getText()+"");
         classUsario.setFechaNac(jfFechaNac.getText()+"");
         classUsario.setIdTipo(classTipo);
-        classUsario.setPass(txtContraEmp.getSelectedText()+"");
+        classUsario.setPass(txtContraEmp.getPassword()+"");
         classUsario.setEstado('A');
         classUsario.setNomusuario(txtNombreEmp.getText()+"");
         classUsario.setTelefono(txtTelEmp.getText()+"");
