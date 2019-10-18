@@ -22,8 +22,6 @@ public class FRAsignarMateria extends javax.swing.JInternalFrame {
     UsuarioJpaController controlUsuario = new UsuarioJpaController();
     MateriaJpaController controlMateria = new MateriaJpaController();
     UsuarioMateJpaController controAddMta = new UsuarioMateJpaController();
-
-    UsuarioMate classUsMat = new UsuarioMate();
     Short idMateria, idUsuario;
     String materia, profe;
     DefaultTableModel model = new DefaultTableModel();
@@ -221,10 +219,11 @@ public class FRAsignarMateria extends javax.swing.JInternalFrame {
             for (int i = 0; i <= TableMateProfe.getRowCount(); i++) {
                 Usuario classUsuario = new Usuario();
                 Materia classMateria = new Materia();
-                idUsuario = Short.parseShort(TableMateProfe.getValueAt(i, 0) + "");
-                idMateria = Short.parseShort(TableMateProfe.getValueAt(i, 2) + "");
-                classUsuario.setIdUsuario(idUsuario);
-                classMateria.setIdMateria(idMateria);
+                UsuarioMate classUsMat = new UsuarioMate();
+                Short idUsuarioC = Short.parseShort(TableMateProfe.getValueAt(i, 0) + "");
+                Short idMateriaC = Short.parseShort(TableMateProfe.getValueAt(i, 2) + "");
+                classUsuario.setIdUsuario(idUsuarioC);
+                classMateria.setIdMateria(idMateriaC);
                 classUsMat.setIdMateria(classMateria);
                 classUsMat.setIdUsuario(classUsuario);
                 controAddMta.create(classUsMat);

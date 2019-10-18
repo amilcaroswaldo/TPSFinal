@@ -286,7 +286,7 @@ public class FRempleado extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1158, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -298,6 +298,11 @@ public class FRempleado extends javax.swing.JInternalFrame {
         );
 
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -362,7 +367,7 @@ public class FRempleado extends javax.swing.JInternalFrame {
         classUsario.setDui(txtDUiEmp.getText()+"");
         classUsario.setFechaNac(jfFechaNac.getText()+"");
         classUsario.setIdTipo(classTipo);
-        classUsario.setPass(txtContraEmp.getPassword()+"");
+        classUsario.setPass(txtContraEmp.getText()+"");
         classUsario.setEstado('A');
         classUsario.setNomusuario(txtNombreEmp.getText()+"");
         classUsario.setTelefono(txtTelEmp.getText()+"");
@@ -377,11 +382,11 @@ public class FRempleado extends javax.swing.JInternalFrame {
     private void tableUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableUsuariosMouseClicked
         // TODO add your handling code here:
         DefaultTableModel modelo = (DefaultTableModel) tableUsuarios.getModel();
-        
+        txtContraEmp.setText("");
         txtNombreEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),2)));
         txtApellidoEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),3)));
         txtUsuarioEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),4)));
-        txtContraEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),5)));
+       // txtContraEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),5)));
         jfFechaNac.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),6)));
         txtDUiEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),7)));
         txtTelEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),8)));
@@ -409,7 +414,7 @@ public class FRempleado extends javax.swing.JInternalFrame {
             classUsario.setDui(txtDUiEmp.getText()+"");
             classUsario.setFechaNac(jfFechaNac.getText()+"");
             classUsario.setIdTipo(classTipo);
-            classUsario.setPass(txtContraEmp.getPassword()+"");            
+            classUsario.setPass(txtContraEmp.getText()+"");            
             classUsario.setEstado('A');
             classUsario.setNomusuario(txtUsuarioEmp.getText()+"");
             classUsario.setTelefono(txtTelEmp.getText()+"");
@@ -436,7 +441,7 @@ public class FRempleado extends javax.swing.JInternalFrame {
             classUsario.setDui(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),7)));
             classUsario.setFechaNac(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),6)));
             classUsario.setIdTipo(classTipo);
-            String valorPass = new String(txtContraEmp.getPassword());
+            String valorPass = new String(txtContraEmp.getSelectedText());
             classUsario.setPass(valorPass);
             classUsario.setEstado('I');
             classUsario.setNomusuario(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),4)));
@@ -450,6 +455,10 @@ public class FRempleado extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

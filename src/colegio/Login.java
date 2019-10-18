@@ -6,6 +6,7 @@
 package colegio;
 
 //import com.placeholder.PlaceHolder;
+import com.placeholder.PlaceHolder;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
@@ -19,11 +20,11 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    //PlaceHolder holder;
+    PlaceHolder holder;
     public Login() {
         initComponents();
-       // holder = new PlaceHolder(txtusuario, "Ingrese su usuario");
-       // holder = new PlaceHolder(txtContra, "Ingrese su contraseña");
+        holder = new PlaceHolder(txtusuario, "Ingrese su usuario");
+        holder = new PlaceHolder(txtContra, "Ingrese su contraseña");
     }
 
     /**
@@ -63,6 +64,11 @@ public class Login extends javax.swing.JFrame {
         jLabel4.setText("LOGIN");
 
         txtusuario.setFocusable(false);
+        txtusuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtusuarioActionPerformed(evt);
+            }
+        });
 
         txtContra.setFocusable(false);
 
@@ -156,7 +162,7 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(txtusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtContra, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -169,6 +175,10 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtusuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtusuarioActionPerformed
 
     /**
      * @param args the command line arguments

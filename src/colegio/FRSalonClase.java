@@ -8,8 +8,12 @@ import Acceso_Datos.Grado;
 import Acceso_Datos.Seccion;
 import Logica_Negocios.GradoJpaController;
 import Logica_Negocios.SeccionJpaController;
+import Logica_Negocios.exceptions.NonexistentEntityException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author DELL
@@ -19,8 +23,8 @@ public class FRSalonClase extends javax.swing.JInternalFrame {
     SeccionJpaController controlSeccion = new SeccionJpaController();
     Grado classGrado = new Grado();
     Seccion clasSeccion = new Seccion();
-    Short idSecc=0;
-    String VGrado ="", fechaGrad;
+    Short idSecc=0, idGrado;
+    String VGrado ="", fechaGrad;;
     Calendar c = Calendar.getInstance();
     /**
      * Creates new form SalonClase
@@ -94,11 +98,21 @@ public class FRSalonClase extends javax.swing.JInternalFrame {
 
             }
         ));
+        tableGrado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableGradoMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tableGrado);
 
         cbxGrado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1° año de bachillerato general", "2° año de bachillerato general", "1° año de bachillerato tecnico comercio", "2° año de bachillerato tecnico comercio" }));
 
         btnEliminar.setText("Eliminar salón");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -124,8 +138,7 @@ public class FRSalonClase extends javax.swing.JInternalFrame {
                         .addGap(42, 42, 42)
                         .addComponent(btnCrear)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnEliminar)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -196,6 +209,7 @@ public class FRSalonClase extends javax.swing.JInternalFrame {
             classGrado.setGrado(VGrado);
             classGrado.setIdSeccion(clasSeccion);
             controlGrado.create(classGrado);
+            controlGrado.mostrarGrado(tableGrado);
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnCrearActionPerformed
@@ -203,6 +217,23 @@ public class FRSalonClase extends javax.swing.JInternalFrame {
     private void txtYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtYearActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtYearActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        try {
+            // TODO add your handling code here:
+            controlGrado.destroy(idGrado);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(FRSalonClase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void tableGradoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableGradoMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel modelo = (DefaultTableModel) tableGrado.getModel();
+        idGrado=Short.parseShort(modelo.getValueAt(tableGrado.getSelectedRow(),0)+"");
+        
+    }//GEN-LAST:event_tableGradoMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
