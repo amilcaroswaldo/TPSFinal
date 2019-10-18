@@ -6,6 +6,11 @@
 package colegio;
 
 import com.placeholder.PlaceHolder;
+import Logica_Negocios.Login;
+import Logica_Negocios.Cifrado;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,7 +21,10 @@ public class Logeo extends javax.swing.JFrame {
     /**
      * Creates new form Logeo
      */
+    Login controlLogin = new Login();
     PlaceHolder holder;
+    Cifrado controlCifrado = new Cifrado();
+
     public Logeo() {
         initComponents();
         holder = new PlaceHolder(txtusuario, "Ingrese su usuario");
@@ -33,13 +41,18 @@ public class Logeo extends javax.swing.JFrame {
     private void initComponents() {
 
         txtusuario = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        btnAcess = new javax.swing.JButton();
         txtContra = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton2.setText("ACCEDER");
+        btnAcess.setText("ACCEDER");
+        btnAcess.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAcessActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
@@ -53,7 +66,7 @@ public class Logeo extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(159, 159, 159)
-                        .addComponent(jButton2))
+                        .addComponent(btnAcess))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(77, 77, 77)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -74,12 +87,29 @@ public class Logeo extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(txtContra, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
-                .addComponent(jButton2)
+                .addComponent(btnAcess)
                 .addContainerGap(53, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAcessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessActionPerformed
+        // TODO add your handling code here:       
+        try {
+            if (controlLogin.validarUsuario(txtusuario.getText(), controlCifrado.Encriptar("" + txtContra.getText()))) {
+                JOptionPane.showMessageDialog(null, "Bienvenido");
+                PRINCIPAL obj = new PRINCIPAL();
+                obj.show();
+            } else {
+                JOptionPane.showMessageDialog(null, "Datos incorrectos");
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(Logeo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_btnAcessActionPerformed
 
     /**
      * @param args the command line arguments
@@ -117,7 +147,7 @@ public class Logeo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnAcess;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPasswordField txtContra;
     private javax.swing.JTextField txtusuario;

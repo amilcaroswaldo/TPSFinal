@@ -4,13 +4,22 @@
  * and open the template in the editor.
  */
 package colegio;
+
 import Acceso_Datos.Grado;
 import Logica_Negocios.AlumnoJpaController;
 import Logica_Negocios.GradoJpaController;
 import javax.swing.table.DefaultTableModel;
 import Logica_Negocios.Matricula;
 import Acceso_Datos.VariablesCompartidas;
+import Acceso_Datos.Sesion;
+import Acceso_Datos.Responsable;
+import Acceso_Datos.Parentesco;
+import Acceso_Datos.Alumno;
 import javax.swing.JOptionPane;
+import Logica_Negocios.ResponsableJpaController;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author DELL
@@ -21,12 +30,18 @@ public class FRMatricula extends javax.swing.JInternalFrame {
     GradoJpaController controlGrado = new GradoJpaController();
     VariablesCompartidas vars = new VariablesCompartidas();
     Matricula controlMatri = new Matricula();
-    Short idAlum = 0, idGrado=0, idSecc=0;
+    Short idAlum = 0, idGrado = 0, idSecc = 0, idResp, idParent;
+    Sesion classSesion = new Sesion();
+    Responsable classResp = new Responsable();
+    Parentesco classParen = new Parentesco();
+    Alumno classAlum = new Alumno();
+    ResponsableJpaController controlResp = new ResponsableJpaController();
+
     public FRMatricula() {
         initComponents();
         controlAlum.mostrarAlumno(tableAlumno);
         controlGrado.comboGrado(cbxGrado);
-        
+
     }
 
     /**
@@ -53,6 +68,7 @@ public class FRMatricula extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tableAlumsGrado = new javax.swing.JTable();
         checkPago = new javax.swing.JCheckBox();
+        jButton1 = new javax.swing.JButton();
         lblNombreAlum = new javax.swing.JLabel();
         btnMatricular = new javax.swing.JButton();
 
@@ -90,6 +106,11 @@ public class FRMatricula extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tableAlumno);
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -148,6 +169,11 @@ public class FRMatricula extends javax.swing.JInternalFrame {
                 cbxGradoMousePressed(evt);
             }
         });
+        cbxGrado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxGradoActionPerformed(evt);
+            }
+        });
 
         btnNuevoGrado.setText("Nuevo");
         btnNuevoGrado.addActionListener(new java.awt.event.ActionListener() {
@@ -176,40 +202,52 @@ public class FRMatricula extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.setText("Seleccionar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(cbxGrado, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(cbxGrado, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(checkPago)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnNuevoGrado)))))
+                        .addComponent(checkPago)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
+                .addComponent(btnNuevoGrado)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(15, 15, 15)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(cbxGrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxGrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNuevoGrado))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(checkPago)
+                .addContainerGap(11, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(72, 72, 72)
+                .addComponent(btnNuevoGrado)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -239,16 +277,16 @@ public class FRMatricula extends javax.swing.JInternalFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnMatricular, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(270, 270, 270))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addComponent(lblNombreAlum, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnMatricular, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(269, 269, 269))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,37 +299,59 @@ public class FRMatricula extends javax.swing.JInternalFrame {
                 .addComponent(lblNombreAlum, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addComponent(btnMatricular, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoALumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoALumnoActionPerformed
-FRDatosAlumnos  Dat = new FRDatosAlumnos();
+        FRDatosAlumnos Dat = new FRDatosAlumnos();
         PRINCIPAL.escritorio.add(Dat);
         Dat.show();        // TODO add your handling code here:
     }//GEN-LAST:event_btnNuevoALumnoActionPerformed
 
     private void tableAlumnoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableAlumnoMouseClicked
         // TODO add your handling code here:
-         DefaultTableModel modelo = (DefaultTableModel) tableAlumno.getModel();
-         idAlum=Short.parseShort(modelo.getValueAt(tableAlumno.getSelectedRow(),0)+"");
-         lblNombreAlum.setText("Id: "+modelo.getValueAt(tableAlumno.getSelectedRow(),0)+" "
-                                + modelo.getValueAt(tableAlumno.getSelectedRow(),2)+" "
-                                + modelo.getValueAt(tableAlumno.getSelectedRow(),3)+"");
+        DefaultTableModel modelo = (DefaultTableModel) tableAlumno.getModel();
+
+        try {
+            idAlum = Short.parseShort(modelo.getValueAt(tableAlumno.getSelectedRow(), 0) + "");
+            idResp = Short.parseShort(modelo.getValueAt(tableAlumno.getSelectedRow(), 1) + "");
+            lblNombreAlum.setText("Id: " + modelo.getValueAt(tableAlumno.getSelectedRow(), 0) + " "
+                    + modelo.getValueAt(tableAlumno.getSelectedRow(), 2) + " "
+                    + modelo.getValueAt(tableAlumno.getSelectedRow(), 3) + "");
+            classResp.setIdResponsable(idAlum);
+            if ((modelo.getValueAt(tableAlumno.getSelectedRow(), 0) + "").equals("Hijo")) {
+                idParent = 1;
+            } else {
+                idParent = 2;
+            }
+            classParen.setIdParentesco(idParent);
+            classAlum.setNombre(modelo.getValueAt(tableAlumno.getSelectedRow(), 3) + "");
+            classAlum.setApellido(modelo.getValueAt(tableAlumno.getSelectedRow(), 4) + "");
+            classAlum.setFechaNacimiento(modelo.getValueAt(tableAlumno.getSelectedRow(), 3) + "");
+            classAlum.setProblemasSalud(modelo.getValueAt(tableAlumno.getSelectedRow(), 3) + "");
+            classAlum.setIdAlumno(idAlum);
+            classAlum.setIdParentesco(classParen);
+            classAlum.setIdResponsable(classResp);
+        } catch (Exception ex) {
+            Logger.getLogger(FRMatricula.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_tableAlumnoMouseClicked
+
 
     private void btnMatricularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatricularActionPerformed
         // TODO add your handling code here:
         if (checkPago.isSelected()) {
-            idGrado= cbxGrado.getItemAt(cbxGrado.getSelectedIndex()).getIdGrado();
-            // controlMatri.matricular(vars.getIdProfesor(), idAlum, idGrado);
+            idGrado = cbxGrado.getItemAt(cbxGrado.getSelectedIndex()).getIdGrado();
+            controlMatri.matricular(classSesion.getIdUsuario(), idAlum, idGrado);
             controlMatri.matricular(2, idAlum, idGrado);
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(null, "No ha hecho el pago de la matricula");
         }
 
@@ -302,7 +362,7 @@ FRDatosAlumnos  Dat = new FRDatosAlumnos();
     }//GEN-LAST:event_checkPagoActionPerformed
 
     private void btnNuevoGradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoGradoActionPerformed
-        FRSalonClase  Res = new FRSalonClase();
+        FRSalonClase Res = new FRSalonClase();
         PRINCIPAL.escritorio.add(Res);
         Res.show();        // TODO add your handling code here:
     }//GEN-LAST:event_btnNuevoGradoActionPerformed
@@ -320,9 +380,29 @@ FRDatosAlumnos  Dat = new FRDatosAlumnos();
 
     private void cbxGradoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbxGradoMouseClicked
         // TODO add your handling code here:
-        idGrado= cbxGrado.getItemAt(cbxGrado.getSelectedIndex()).getIdGrado();
-        controlMatri.mostrarAlumnosGrado(tableAlumsGrado, idGrado);
+        
     }//GEN-LAST:event_cbxGradoMouseClicked
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        try {
+            // TODO add your handling code here:
+            controlAlum.edit(classAlum);
+            controlAlum.mostrarAlumno(tableAlumno);
+        } catch (Exception ex) {
+            Logger.getLogger(FRMatricula.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void cbxGradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxGradoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxGradoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        idGrado = cbxGrado.getItemAt(cbxGrado.getSelectedIndex()).getIdGrado();
+        controlMatri.mostrarAlumnosGrado(tableAlumsGrado, idGrado);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -332,6 +412,7 @@ FRDatosAlumnos  Dat = new FRDatosAlumnos();
     private javax.swing.JButton btnNuevoGrado;
     private javax.swing.JComboBox<Grado> cbxGrado;
     private javax.swing.JCheckBox checkPago;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;

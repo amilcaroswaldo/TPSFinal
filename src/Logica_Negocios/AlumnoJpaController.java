@@ -208,7 +208,7 @@ public class AlumnoJpaController implements Serializable {
     
     public void mostrarAlumno(JTable tabla){
        DefaultTableModel modelo = null;
-       String[] titulo = {"ID Alumno", "Responsable", "Nombre", "Apellido","Fecha de nacimiento", "Problemas de salud","Parentesco"};
+       String[] titulo = {"ID Alumno","ID Responsable", "Responsable", "Nombre", "Apellido","Fecha de nacimiento", "Problemas de salud","Parentesco"};
         modelo = new DefaultTableModel(null,titulo);
         List<Alumno> lista = findAlumnoEntities();
         List<Responsable> listaResp = controlResp.findResponsableEntities();
@@ -223,12 +223,13 @@ public class AlumnoJpaController implements Serializable {
                 }
             }
             camposRepresentante[0] = item.getIdAlumno()+"";
-            camposRepresentante[1] = responsable;
-            camposRepresentante[2] = item.getNombre()+"";
-            camposRepresentante[3] = item.getApellido()+"";
-            camposRepresentante[4] = item.getFechaNacimiento()+"";
-            camposRepresentante[5] = item.getProblemasSalud()+"";
-            camposRepresentante[6] =item.getIdParentesco()+"";
+            camposRepresentante[1] = item.getIdResponsable()+"";
+            camposRepresentante[2] = responsable;
+            camposRepresentante[3] = item.getNombre()+"";
+            camposRepresentante[4] = item.getApellido()+"";
+            camposRepresentante[5] = item.getFechaNacimiento()+"";
+            camposRepresentante[6] = item.getProblemasSalud()+"";
+            camposRepresentante[7] =item.getIdParentesco()+"";
             
             modelo.addRow(camposRepresentante);
         }

@@ -10,6 +10,7 @@ import Acceso_Datos.Responsable;
 import Acceso_Datos.Alumno;
 import Acceso_Datos.Parentesco;
 import javax.swing.JOptionPane;
+import Logica_Negocios.AlumnoJpaController;
 /**
  *
  * @author DELL
@@ -18,8 +19,10 @@ public class FRDatosAlumnos extends javax.swing.JInternalFrame {
 
     ResponsableJpaController controlResp = new ResponsableJpaController();
     Responsable classResp = new Responsable();
+    Parentesco classParentesco = new Parentesco();
     Alumno classAlum = new Alumno();
-    int idResp =0;
+    AlumnoJpaController conttrolAlumno= new AlumnoJpaController();
+    short idResp =0, idParen;
     public FRDatosAlumnos() {
         initComponents();
         controlResp.mostrarResponsable(tableResp);
@@ -324,6 +327,19 @@ public class FRDatosAlumnos extends javax.swing.JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         idResp= cbxParent.getItemAt(cbxParent.getSelectedIndex()).getIdParentesco();
+        idParen =cbxParent.getItemAt(cbxParent.getSelectedIndex()).getIdParentesco();
+        try {
+            classResp.setIdResponsable(idResp);
+            classParentesco.setIdParentesco(idParen);
+            classAlum.setNombre(txtNombre.getText().toLowerCase());
+            classAlum.setApellido(txtApellido.getText().toLowerCase());
+            classAlum.setIdParentesco(classParentesco);
+            classAlum.setIdResponsable(classResp);
+            classAlum.setProblemasSalud(txtSalud.getText().toLowerCase());
+            classAlum.setFechaNacimiento(txtFechaNac.getText().toLowerCase());
+            conttrolAlumno.create(classAlum);
+        } catch (Exception e) {
+        }
         //JOptionPane.showMessageDialog(null, cbxParent.getItemAt(cbxParent.getSelectedIndex()).getxtNombreco());
     }//GEN-LAST:event_btnGuardarActionPerformed
 

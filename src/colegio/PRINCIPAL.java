@@ -6,20 +6,21 @@
 package colegio;
 
 import javax.swing.JInternalFrame;
-
+import Acceso_Datos.Sesion;
 /**
  *
  * @author DELL
  */
 public class PRINCIPAL extends javax.swing.JFrame {
 
+    Sesion classSesion= new Sesion();
     /**
      * Creates new form principal
      */
     public PRINCIPAL() {
         initComponents();
         this.setExtendedState(PRINCIPAL.MAXIMIZED_BOTH);
-        
+        System.out.println("Prueba 1 "+ classSesion.getNombreUsuario());
     }
 
     /**

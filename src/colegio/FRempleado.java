@@ -4,16 +4,19 @@
  * and open the template in the editor.
  */
 package colegio;
+
 import Logica_Negocios.UsuarioJpaController;
 import Logica_Negocios.TipoUsuarioJpaController;
 import Acceso_Datos.Usuario;
 import Acceso_Datos.TipoUsuario;
+import Logica_Negocios.Cifrado;
 import Logica_Negocios.exceptions.NonexistentEntityException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author DELL
@@ -24,9 +27,10 @@ public class FRempleado extends javax.swing.JInternalFrame {
     TipoUsuarioJpaController controlTiPo = new TipoUsuarioJpaController();
     TipoUsuario classTipo = new TipoUsuario();
     Usuario classUsario = new Usuario();
-    Short idTipo=0, idUser=0;
+    Short idTipo = 0, idUser = 0;
     String tipoUserTable;
-    
+    Cifrado classCifrado = new Cifrado();
+
     public FRempleado() {
         initComponents();
         controlTiPo.comboTipo(comboPrivilegioEmp);
@@ -360,18 +364,19 @@ public class FRempleado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtApellidoEmpActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        idTipo= comboPrivilegioEmp.getItemAt(comboPrivilegioEmp.getSelectedIndex()).getIdTipo();
-        classTipo.setIdTipo(idTipo);
-        classUsario.setNombre(txtNombreEmp.getText()+"");
-        classUsario.setApellido(txtApellidoEmp.getText()+"");
-        classUsario.setDui(txtDUiEmp.getText()+"");
-        classUsario.setFechaNac(jfFechaNac.getText()+"");
-        classUsario.setIdTipo(classTipo);
-        classUsario.setPass(txtContraEmp.getText()+"");
-        classUsario.setEstado('A');
-        classUsario.setNomusuario(txtNombreEmp.getText()+"");
-        classUsario.setTelefono(txtTelEmp.getText()+"");
         try {
+            idTipo = comboPrivilegioEmp.getItemAt(comboPrivilegioEmp.getSelectedIndex()).getIdTipo();
+            classTipo.setIdTipo(idTipo);
+            classUsario.setNombre(txtNombreEmp.getText() + "");
+            classUsario.setApellido(txtApellidoEmp.getText() + "");
+            classUsario.setDui(txtDUiEmp.getText() + "");
+            classUsario.setFechaNac(jfFechaNac.getText() + "");
+            classUsario.setIdTipo(classTipo);
+            String passw = txtContraEmp.getText() + "";
+            classUsario.setPass(classCifrado.Encriptar(passw));
+            classUsario.setEstado('A');
+            classUsario.setNomusuario(txtNombreEmp.getText() + "");
+            classUsario.setTelefono(txtTelEmp.getText() + "");
             controlUsuario.create(classUsario);
             controlUsuario.mostrarUsuario(tableUsuarios);
         } catch (Exception ex) {
@@ -382,78 +387,81 @@ public class FRempleado extends javax.swing.JInternalFrame {
     private void tableUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableUsuariosMouseClicked
         // TODO add your handling code here:
         DefaultTableModel modelo = (DefaultTableModel) tableUsuarios.getModel();
-        txtContraEmp.setText("");
-        txtNombreEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),2)));
-        txtApellidoEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),3)));
-        txtUsuarioEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),4)));
-       // txtContraEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),5)));
-        jfFechaNac.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),6)));
-        txtDUiEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),7)));
-        txtTelEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),8)));
-        idUser=Short.parseShort(modelo.getValueAt(tableUsuarios.getSelectedRow(),0)+"");
-        tipoUserTable = String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),1));
-        if (tipoUserTable.equals("Administrador")) {
-            comboPrivilegioEmp.setSelectedIndex(0);
+
+        try {
+            txtNombreEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(), 2)));
+            txtApellidoEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(), 3)));
+            txtUsuarioEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(), 4)));
+            txtContraEmp.setText(classCifrado.Desencriptar(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(), 5))));
+            jfFechaNac.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(), 6)));
+            txtDUiEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(), 7)));
+            txtTelEmp.setText(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(), 8)));
+            idUser = Short.parseShort(modelo.getValueAt(tableUsuarios.getSelectedRow(), 0) + "");
+            tipoUserTable = String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(), 1));
+            if (tipoUserTable.equals("Administrador")) {
+                comboPrivilegioEmp.setSelectedIndex(0);
+            } else if (tipoUserTable.equals("Docente")) {
+                comboPrivilegioEmp.setSelectedIndex(1);
+            } else {
+                comboPrivilegioEmp.setSelectedIndex(2);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FRempleado.class.getName()).log(Level.SEVERE, null, ex);
         }
-         else if (tipoUserTable.equals("Docente")) {
-            comboPrivilegioEmp.setSelectedIndex(1);
-        }
-        else {
-            comboPrivilegioEmp.setSelectedIndex(2);
-        }
+
     }//GEN-LAST:event_tableUsuariosMouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:         
         try {
-            idTipo= comboPrivilegioEmp.getItemAt(comboPrivilegioEmp.getSelectedIndex()).getIdTipo();
+            idTipo = comboPrivilegioEmp.getItemAt(comboPrivilegioEmp.getSelectedIndex()).getIdTipo();
             classTipo.setIdTipo(idTipo);
             classUsario.setIdUsuario(idUser);
-            classUsario.setNombre(txtNombreEmp.getText()+"");
-            classUsario.setApellido(txtApellidoEmp.getText()+"");
-            classUsario.setDui(txtDUiEmp.getText()+"");
-            classUsario.setFechaNac(jfFechaNac.getText()+"");
+            classUsario.setNombre(txtNombreEmp.getText() + "");
+            classUsario.setApellido(txtApellidoEmp.getText() + "");
+            classUsario.setDui(txtDUiEmp.getText() + "");
+            classUsario.setFechaNac(jfFechaNac.getText() + "");
             classUsario.setIdTipo(classTipo);
-            classUsario.setPass(txtContraEmp.getText()+"");            
+            String passw = txtContraEmp.getText() + "";
+            classUsario.setPass(classCifrado.Encriptar(passw));
             classUsario.setEstado('A');
-            classUsario.setNomusuario(txtUsuarioEmp.getText()+"");
-            classUsario.setTelefono(txtTelEmp.getText()+"");
+            classUsario.setNomusuario(txtUsuarioEmp.getText() + "");
+            classUsario.setTelefono(txtTelEmp.getText() + "");
             controlUsuario.edit(classUsario);
             controlUsuario.mostrarUsuario(tableUsuarios);
-            
-            
+
         } catch (Exception ex) {
             Logger.getLogger(FRempleado.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Error"+ ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error" + ex.getMessage());
         }
-            
-        
+
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         try {
             DefaultTableModel modelo = (DefaultTableModel) tableUsuarios.getModel();
-            idTipo= comboPrivilegioEmp.getItemAt(comboPrivilegioEmp.getSelectedIndex()).getIdTipo();
+            idTipo = comboPrivilegioEmp.getItemAt(comboPrivilegioEmp.getSelectedIndex()).getIdTipo();
             classTipo.setIdTipo(idTipo);
             classUsario.setIdUsuario(idUser);
-            classUsario.setNombre(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),2)));
-            classUsario.setApellido(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),3)));
-            classUsario.setDui(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),7)));
-            classUsario.setFechaNac(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),6)));
+            classUsario.setNombre(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(), 2)));
+            classUsario.setApellido(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(), 3)));
+            classUsario.setDui(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(), 7)));
+            classUsario.setFechaNac(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(), 6)));
             classUsario.setIdTipo(classTipo);
             String valorPass = new String(txtContraEmp.getSelectedText());
             classUsario.setPass(valorPass);
             classUsario.setEstado('I');
-            classUsario.setNomusuario(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(),4)));
-            classUsario.setTelefono(txtTelEmp.getText()+"");
+            classUsario.setNomusuario(String.valueOf(modelo.getValueAt(tableUsuarios.getSelectedRow(), 4)));
+            classUsario.setTelefono(txtTelEmp.getText() + "");
             controlUsuario.edit(classUsario);
             controlUsuario.mostrarUsuario(tableUsuarios);
-            
+
         } catch (Exception ex) {
             Logger.getLogger(FRempleado.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Error"+ ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error" + ex.getMessage());
         }
-        
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
