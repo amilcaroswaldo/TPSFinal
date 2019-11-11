@@ -4,18 +4,38 @@
  * and open the template in the editor.
  */
 package colegio;
+
 import Logica_Negocios.ResponsableJpaController;
 import javax.swing.JOptionPane;
+import Variables_Estaticas.ResponsableVars;
+
 /**
  *
  * @author DELL
  */
 public class FRResponsable extends javax.swing.JInternalFrame {
 
-    ResponsableJpaController controlResp= new ResponsableJpaController();
+    ResponsableJpaController controlResp = new ResponsableJpaController();
     Acceso_Datos.Responsable claseResp = new Acceso_Datos.Responsable();
+
     public FRResponsable() {
         initComponents();
+        valores();
+    }
+
+    private void valores() {
+        if (ResponsableVars.editar) {
+            txtNombreRes.setText(ResponsableVars.nombre);
+            txtApellidoRes.setText(ResponsableVars.apellido);
+            txtDirecRes.setText(ResponsableVars.direccion);
+            txtDUIRes.setText(ResponsableVars.dui);
+            txtTeleRes.setText(ResponsableVars.telefono);
+            txtProfesionRes.setText(ResponsableVars.profesion);
+            txtLugarTrabajoRes.setText(ResponsableVars.lugarTrabajo);
+            txtTeleTrabajoRes.setText(ResponsableVars.telefonoTrabajo);
+            txtDirecTrabajo.setText(ResponsableVars.direccionTrabajjo);
+            jButton2.setText("Actualizar");
+        }
     }
 
     /**
@@ -254,9 +274,9 @@ public class FRResponsable extends javax.swing.JInternalFrame {
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
-       FRDatosAlumnos dat = new FRDatosAlumnos();
-       dat.show();
-       this.dispose();
+        FRDatosAlumnos dat = new FRDatosAlumnos();
+        dat.show();
+        this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void txtDirecResActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDirecResActionPerformed
@@ -265,20 +285,36 @@ public class FRResponsable extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-         try {
-            claseResp.setNombre(txtNombreRes.getText()+"");
-            claseResp.setApellido(txtApellidoRes.getText()+"");
-            claseResp.setDireccion(txtDirecRes.getText()+"");
-            claseResp.setDireccionTrabajo(txtDirecTrabajo.getText()+"");
-            claseResp.setDui(txtDUIRes.getText()+"");
-            claseResp.setLugarTrabajo(txtLugarTrabajoRes.getText()+"");
-            claseResp.setProfesion(txtProfesionRes.getText()+"");
-            claseResp.setTelefono(txtTeleRes.getText()+"");
-            claseResp.setTelefonoTrabajo(txtTeleTrabajoRes.getText()+"");
-            System.out.println(claseResp.getApellido()+""+claseResp.getNombre()+""+claseResp.getTelefono()+""+ claseResp.getTelefonoTrabajo());
-            controlResp.create(claseResp);
+        try {
+            if (ResponsableVars.editar) {
+                claseResp.setNombre(txtNombreRes.getText() + "");
+                claseResp.setApellido(txtApellidoRes.getText() + "");
+                claseResp.setDireccion(txtDirecRes.getText() + "");
+                claseResp.setDireccionTrabajo(txtDirecTrabajo.getText() + "");
+                claseResp.setDui(txtDUIRes.getText() + "");
+                claseResp.setLugarTrabajo(txtLugarTrabajoRes.getText() + "");
+                claseResp.setProfesion(txtProfesionRes.getText() + "");
+                claseResp.setTelefono(txtTeleRes.getText() + "");
+                claseResp.setTelefonoTrabajo(txtTeleTrabajoRes.getText() + "");
+                claseResp.setIdResponsable(ResponsableVars.idResponsabe);
+                claseResp.getAlumnoCollection();
+                claseResp.setAlumnoCollection(null);
+                controlResp.edit(claseResp);
+            } else {
+                claseResp.setNombre(txtNombreRes.getText() + "");
+                claseResp.setApellido(txtApellidoRes.getText() + "");
+                claseResp.setDireccion(txtDirecRes.getText() + "");
+                claseResp.setDireccionTrabajo(txtDirecTrabajo.getText() + "");
+                claseResp.setDui(txtDUIRes.getText() + "");
+                claseResp.setLugarTrabajo(txtLugarTrabajoRes.getText() + "");
+                claseResp.setProfesion(txtProfesionRes.getText() + "");
+                claseResp.setTelefono(txtTeleRes.getText() + "");
+                claseResp.setTelefonoTrabajo(txtTeleTrabajoRes.getText() + "");
+                controlResp.create(claseResp);
+            }
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: "+ e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

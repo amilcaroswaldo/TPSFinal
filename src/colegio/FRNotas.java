@@ -246,6 +246,8 @@ public class FRNotas extends javax.swing.JInternalFrame {
 
     private void btnMostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostarActionPerformed
         // TODO add your handling code here:
+        DefaultTableModel modelo = (DefaultTableModel) tableNotas.getModel();
+        modelo.setRowCount(0);
         idGrado = cbxGrado.getItemAt(cbxGrado.getSelectedIndex()).getIdGrado();
         controlNota.mostrarAlumnosGrado(tableNotas, idGrado);
     }//GEN-LAST:event_btnMostarActionPerformed
@@ -267,13 +269,13 @@ public class FRNotas extends javax.swing.JInternalFrame {
         perio = cbxPeriodo.getItemAt(cbxPeriodo.getSelectedIndex()).toString();
         periodo();
         for (int i = 0; i <= tableNotas.getRowCount(); i++) {
-            JOptionPane.showMessageDialog(null, tableNotas.getValueAt(i, 0) + "");
+           // JOptionPane.showMessageDialog(null, tableNotas.getValueAt(i, 0) + "");
             idAlum = Short.parseShort(tableNotas.getValueAt(i, 0) + "");
             nota1 = Double.parseDouble(tableNotas.getValueAt(i, 2) + "");
             nota2 = Double.parseDouble(tableNotas.getValueAt(i, 3) + "");
             nota3 = Double.parseDouble(tableNotas.getValueAt(i, 4) + "");
             controlNota.agregarNotas(idAlum, idMateria, periodo, nota1, nota2, nota3);
-            JOptionPane.showMessageDialog(null, "Proceso terminado");
+           // JOptionPane.showMessageDialog(null, "Proceso terminado");
         }
 
     }//GEN-LAST:event_btnGuardarActionPerformed

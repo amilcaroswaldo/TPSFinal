@@ -90,7 +90,7 @@ public class ResponsableJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Responsable persistentResponsable = em.find(Responsable.class, responsable.getIdResponsable());
-            Collection<Alumno> alumnoCollectionOld = persistentResponsable.getAlumnoCollection();
+            /*Collection<Alumno> alumnoCollectionOld = persistentResponsable.getAlumnoCollection();
             Collection<Alumno> alumnoCollectionNew = responsable.getAlumnoCollection();
             Collection<Alumno> attachedAlumnoCollectionNew = new ArrayList<Alumno>();
             for (Alumno alumnoCollectionNewAlumnoToAttach : alumnoCollectionNew) {
@@ -98,8 +98,9 @@ public class ResponsableJpaController implements Serializable {
                 attachedAlumnoCollectionNew.add(alumnoCollectionNewAlumnoToAttach);
             }
             alumnoCollectionNew = attachedAlumnoCollectionNew;
-            responsable.setAlumnoCollection(alumnoCollectionNew);
+            responsable.setAlumnoCollection(alumnoCollectionNew);*/
             responsable = em.merge(responsable);
+            /*
             for (Alumno alumnoCollectionOldAlumno : alumnoCollectionOld) {
                 if (!alumnoCollectionNew.contains(alumnoCollectionOldAlumno)) {
                     alumnoCollectionOldAlumno.setIdResponsable(null);
@@ -116,7 +117,7 @@ public class ResponsableJpaController implements Serializable {
                         oldIdResponsableOfAlumnoCollectionNewAlumno = em.merge(oldIdResponsableOfAlumnoCollectionNewAlumno);
                     }
                 }
-            }
+            }*/
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();

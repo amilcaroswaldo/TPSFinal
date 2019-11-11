@@ -58,7 +58,7 @@ public class Nota {
      public void agregarNotas(int idAlum,int idMate, char periodo, double nota1,double nota2, double nota3) {
         try {
             Connection cn = conn.getConnection();
-            CallableStatement cst = conn.getConnection().prepareCall("{call notas (?,?,?,?,?,?)}");
+            CallableStatement cst = conn.getConnection().prepareCall("{ call notas (?,?,?,?,?,?) }");
             cst.setInt(1, idAlum);
             cst.setInt(2, idMate);
             cst.setInt(3, periodo);

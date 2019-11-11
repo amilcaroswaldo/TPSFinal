@@ -37,12 +37,6 @@ public class Matricula {
 
     public void matricular(int idProfe, int idAlum, int grado) {
         try {
-            //forma 1
-//            PreparedStatement pS = conn.getConnection().prepareStatement("{CALl materia_pago_matricula (?,?,?)}");
-//            pS.setInt(1, idProfe );
-//            pS.setInt(2, idAlum );
-//            pS.setInt(3, grado);
-//            rs= pS.executeQuery();
 
             //forma2
             Connection cn = conn.getConnection();
@@ -52,15 +46,6 @@ public class Matricula {
             cst.setInt(3, grado);
             cst.execute();
 
-            //forma3
-            //CallableStatement cst;
-//            Connection cn = conn.getConnection();
-//            String sql = "execute materia_pago_matricula(?,?,?)";
-//            cst = cn.prepareCall(sql);
-//            cst.registerOutParameter(1, idProfe);
-//            cst.registerOutParameter(2, idAlum);
-//            cst.registerOutParameter(3, grado);
-//            cst.execute();
         } catch (Exception e) {
              JOptionPane.showMessageDialog(null, "Conexion erronea"+e.getMessage());
         }

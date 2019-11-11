@@ -87,6 +87,11 @@ public class FRAsignarMateria extends javax.swing.JInternalFrame {
 
             }
         ));
+        TableMateProfe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableMateProfeMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(TableMateProfe);
 
         btnEliminiarMateProfe.setText("Eliminar");
@@ -234,12 +239,18 @@ public class FRAsignarMateria extends javax.swing.JInternalFrame {
 
     private void btnEliminiarMateProfeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminiarMateProfeActionPerformed
         // TODO add your handling code here:
-        //modelo.removeRow(fila);
+         DefaultTableModel modelo = (DefaultTableModel) TableMateProfe.getModel();
+        modelo.removeRow(TableMateProfe.getSelectedRow());
     }//GEN-LAST:event_btnEliminiarMateProfeActionPerformed
 
     private void ComboMaetsroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboMaetsroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ComboMaetsroActionPerformed
+
+    private void TableMateProfeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableMateProfeMouseClicked
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_TableMateProfeMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

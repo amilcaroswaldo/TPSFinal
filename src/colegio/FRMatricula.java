@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import Logica_Negocios.ResponsableJpaController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Variables_Estaticas.AlumnoVars;
 
 /**
  *
@@ -324,20 +325,20 @@ public class FRMatricula extends javax.swing.JInternalFrame {
                     + modelo.getValueAt(tableAlumno.getSelectedRow(), 2) + " "
                     + modelo.getValueAt(tableAlumno.getSelectedRow(), 3) + "");
             classResp.setIdResponsable(idAlum);
-            if ((modelo.getValueAt(tableAlumno.getSelectedRow(), 0) + "").equals("Hijo")) {
+            if ((modelo.getValueAt(tableAlumno.getSelectedRow(), 7) + "").equals("Hijo")) {
                 idParent = 1;
             } else {
                 idParent = 2;
             }
-            classParen.setIdParentesco(idParent);
-            classAlum.setNombre(modelo.getValueAt(tableAlumno.getSelectedRow(), 3) + "");
-            classAlum.setApellido(modelo.getValueAt(tableAlumno.getSelectedRow(), 4) + "");
-            classAlum.setFechaNacimiento(modelo.getValueAt(tableAlumno.getSelectedRow(), 3) + "");
-            classAlum.setProblemasSalud(modelo.getValueAt(tableAlumno.getSelectedRow(), 3) + "");
-            classAlum.setIdAlumno(idAlum);
-            classAlum.setIdParentesco(classParen);
-            classAlum.setIdResponsable(classResp);
-        } catch (Exception ex) {
+            AlumnoVars.idAlumno = idAlum;
+            AlumnoVars.idResponsabe = idResp;
+            AlumnoVars.responsable = modelo.getValueAt(tableAlumno.getSelectedRow(), 2) + "";
+            AlumnoVars.nombre = modelo.getValueAt(tableAlumno.getSelectedRow(), 3) + "";
+            AlumnoVars.apellido = modelo.getValueAt(tableAlumno.getSelectedRow(), 4) + "";
+            AlumnoVars.fechaNac = modelo.getValueAt(tableAlumno.getSelectedRow(), 5) + "";
+            AlumnoVars.problemasSalud = modelo.getValueAt(tableAlumno.getSelectedRow(), 6) + "";
+            AlumnoVars.idResponsabe = idParent;
+       } catch (Exception ex) {
             Logger.getLogger(FRMatricula.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -350,7 +351,7 @@ public class FRMatricula extends javax.swing.JInternalFrame {
         if (checkPago.isSelected()) {
             idGrado = cbxGrado.getItemAt(cbxGrado.getSelectedIndex()).getIdGrado();
             controlMatri.matricular(classSesion.getIdUsuario(), idAlum, idGrado);
-            controlMatri.matricular(2, idAlum, idGrado);
+            //  controlMatri.matricular(2, idAlum, idGrado);
         } else {
             JOptionPane.showMessageDialog(null, "No ha hecho el pago de la matricula");
         }
@@ -380,14 +381,18 @@ public class FRMatricula extends javax.swing.JInternalFrame {
 
     private void cbxGradoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbxGradoMouseClicked
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_cbxGradoMouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         try {
             // TODO add your handling code here:
-            controlAlum.edit(classAlum);
-            controlAlum.mostrarAlumno(tableAlumno);
+            //  controlAlum.edit(classAlum);
+            // controlAlum.mostrarAlumno(tableAlumno);
+            AlumnoVars.editar= true;
+            FRDatosAlumnos Dat = new FRDatosAlumnos();
+            PRINCIPAL.escritorio.add(Dat);
+            Dat.show();
         } catch (Exception ex) {
             Logger.getLogger(FRMatricula.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -401,7 +406,7 @@ public class FRMatricula extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         idGrado = cbxGrado.getItemAt(cbxGrado.getSelectedIndex()).getIdGrado();
         controlMatri.mostrarAlumnosGrado(tableAlumsGrado, idGrado);
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

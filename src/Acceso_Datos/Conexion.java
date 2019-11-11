@@ -4,16 +4,11 @@
  * and open the template in the editor.
  */
 package Acceso_Datos;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Amilcar
- */
 public class Conexion {
     private static Connection conn=null;
     private static final String  login = "system";

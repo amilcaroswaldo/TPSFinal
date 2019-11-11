@@ -163,6 +163,7 @@ public class FRMaterias extends javax.swing.JInternalFrame {
         try {
             clasMateria.setMateria(txtMateria.getText()+"");
             controlMateria.create(clasMateria);
+            controlMateria.mostrarMateria(tableMaterias);
         } catch (Exception ex) {
             Logger.getLogger(FRMaterias.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -186,6 +187,7 @@ public class FRMaterias extends javax.swing.JInternalFrame {
         try {
             clasMateria.setMateria(txtMateria.getText()+"");
             controlMateria.edit(clasMateria);
+            controlMateria.mostrarMateria(tableMaterias);
         } catch (Exception ex) {
             Logger.getLogger(FRMaterias.class.getName()).log(Level.SEVERE, null, ex);
         }

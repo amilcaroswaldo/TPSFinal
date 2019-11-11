@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package colegio;
+
 import Logica_Negocios.ResponsableJpaController;
 import javax.swing.table.DefaultTableModel;
 import Acceso_Datos.Responsable;
@@ -11,6 +12,9 @@ import Acceso_Datos.Alumno;
 import Acceso_Datos.Parentesco;
 import javax.swing.JOptionPane;
 import Logica_Negocios.AlumnoJpaController;
+import Variables_Estaticas.ResponsableVars;
+import Variables_Estaticas.AlumnoVars;
+
 /**
  *
  * @author DELL
@@ -21,12 +25,26 @@ public class FRDatosAlumnos extends javax.swing.JInternalFrame {
     Responsable classResp = new Responsable();
     Parentesco classParentesco = new Parentesco();
     Alumno classAlum = new Alumno();
-    AlumnoJpaController conttrolAlumno= new AlumnoJpaController();
-    short idResp =0, idParen;
+    AlumnoJpaController conttrolAlumno = new AlumnoJpaController();
+    short idResp = 0, idParen;
+
     public FRDatosAlumnos() {
         initComponents();
         controlResp.mostrarResponsable(tableResp);
         controlResp.comboParentesco(cbxParent);
+        Valores();
+    }
+
+    private void Valores() {
+        if (AlumnoVars.editar) {
+            btnGuardar.setText("Actualizar");
+            btnMatricular.hide();
+            txtNombre.setText(AlumnoVars.nombre);
+            txtApellido.setText(AlumnoVars.apellido);
+            txtFechaNac.setText(AlumnoVars.fechaNac);
+            txtResp.setText(AlumnoVars.responsable);
+            txtSalud.setText(AlumnoVars.problemasSalud);
+        }
     }
 
     /**
@@ -231,21 +249,22 @@ public class FRDatosAlumnos extends javax.swing.JInternalFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 723, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(45, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(297, Short.MAX_VALUE)
                 .addComponent(btnNuevoResponsable1)
                 .addGap(18, 18, 18)
                 .addComponent(btnNuevoResponsable)
                 .addGap(311, 311, 311))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,42 +321,71 @@ public class FRDatosAlumnos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnNuevoResponsableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoResponsableActionPerformed
-        FRResponsable  Res = new FRResponsable();
+        ResponsableVars.editar = true;
+        FRResponsable Res = new FRResponsable();
         PRINCIPAL.escritorio.add(Res);
         Res.show();// TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnNuevoResponsableActionPerformed
 
     private void btnMatricularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatricularActionPerformed
-        FRMatricula  Mat = new FRMatricula();
+        FRMatricula Mat = new FRMatricula();
         PRINCIPAL.escritorio.add(Mat);
         Mat.show();// TODO add your handling code here:
     }//GEN-LAST:event_btnMatricularActionPerformed
 
     private void tableRespMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRespMouseClicked
         // TODO add your handling code here:
-         DefaultTableModel modelo = (DefaultTableModel) tableResp.getModel();
-
-        txtResp.setText(String.valueOf(modelo.getValueAt(tableResp.getSelectedRow(),1)) +" "+String.valueOf(modelo.getValueAt(tableResp.getSelectedRow(),2)));
-        short id=Short.parseShort(modelo.getValueAt(tableResp.getSelectedRow(),0).toString());
-        classResp.setIdResponsable(id);
+        DefaultTableModel modelo = (DefaultTableModel) tableResp.getModel();
+        txtResp.setText(String.valueOf(modelo.getValueAt(tableResp.getSelectedRow(), 1)) + " " + String.valueOf(modelo.getValueAt(tableResp.getSelectedRow(), 2)));
+        short id = Short.parseShort(modelo.getValueAt(tableResp.getSelectedRow(), 0).toString());
+        idResp = id;
         classAlum.setIdResponsable(classResp);
+        //valores a editar
+        ResponsableVars.idResponsabe = id;
+        ResponsableVars.nombre = String.valueOf(modelo.getValueAt(tableResp.getSelectedRow(), 1));
+        ResponsableVars.apellido = String.valueOf(modelo.getValueAt(tableResp.getSelectedRow(), 2));
+        ResponsableVars.direccion = String.valueOf(modelo.getValueAt(tableResp.getSelectedRow(), 3));
+        ResponsableVars.dui = String.valueOf(modelo.getValueAt(tableResp.getSelectedRow(), 4));
+        ResponsableVars.telefono = String.valueOf(modelo.getValueAt(tableResp.getSelectedRow(), 5));
+        ResponsableVars.profesion = String.valueOf(modelo.getValueAt(tableResp.getSelectedRow(), 6));
+        ResponsableVars.lugarTrabajo = String.valueOf(modelo.getValueAt(tableResp.getSelectedRow(), 7));
+        ResponsableVars.telefonoTrabajo = String.valueOf(modelo.getValueAt(tableResp.getSelectedRow(), 8));
+        ResponsableVars.direccionTrabajjo = String.valueOf(modelo.getValueAt(tableResp.getSelectedRow(), 9));
     }//GEN-LAST:event_tableRespMouseClicked
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        idResp= cbxParent.getItemAt(cbxParent.getSelectedIndex()).getIdParentesco();
-        idParen =cbxParent.getItemAt(cbxParent.getSelectedIndex()).getIdParentesco();
+        //idResp = cbxParent.getItemAt(cbxParent.getSelectedIndex()).getIdParentesco();
+        idParen = cbxParent.getItemAt(cbxParent.getSelectedIndex()).getIdParentesco();
         try {
-            classResp.setIdResponsable(idResp);
-            classParentesco.setIdParentesco(idParen);
-            classAlum.setNombre(txtNombre.getText().toLowerCase());
-            classAlum.setApellido(txtApellido.getText().toLowerCase());
-            classAlum.setIdParentesco(classParentesco);
-            classAlum.setIdResponsable(classResp);
-            classAlum.setProblemasSalud(txtSalud.getText().toLowerCase());
-            classAlum.setFechaNacimiento(txtFechaNac.getText().toLowerCase());
-            conttrolAlumno.create(classAlum);
+            if (AlumnoVars.editar) {
+              //  classResp.setIdResponsable(idResp);
+                classParentesco.setIdParentesco(idParen);
+                classAlum.setNombre(txtNombre.getText().toLowerCase());
+                classAlum.setApellido(txtApellido.getText().toLowerCase());
+                classAlum.setIdParentesco(classParentesco);
+                if (idResp==0) {
+                   classResp.setIdResponsable(AlumnoVars.idResponsabe);
+                } else {
+                    classResp.setIdResponsable(idResp);
+                }
+                classAlum.setIdResponsable(classResp);
+                classAlum.setProblemasSalud(txtSalud.getText().toLowerCase());
+                classAlum.setFechaNacimiento(txtFechaNac.getText().toLowerCase());
+                classAlum.setIdAlumno(AlumnoVars.idAlumno);
+                conttrolAlumno.edit(classAlum);
+            } else {
+                classResp.setIdResponsable(idResp);
+                classParentesco.setIdParentesco(idParen);
+                classAlum.setNombre(txtNombre.getText().toLowerCase());
+                classAlum.setApellido(txtApellido.getText().toLowerCase());
+                classAlum.setIdParentesco(classParentesco);
+                classAlum.setIdResponsable(classResp);
+                classAlum.setProblemasSalud(txtSalud.getText().toLowerCase());
+                classAlum.setFechaNacimiento(txtFechaNac.getText().toLowerCase());
+                conttrolAlumno.create(classAlum);
+            }
         } catch (Exception e) {
         }
         //JOptionPane.showMessageDialog(null, cbxParent.getItemAt(cbxParent.getSelectedIndex()).getxtNombreco());
@@ -345,6 +393,11 @@ public class FRDatosAlumnos extends javax.swing.JInternalFrame {
 
     private void btnNuevoResponsable1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoResponsable1ActionPerformed
         // TODO add your handling code here:
+        ResponsableVars.editar = false;
+        FRResponsable Res = new FRResponsable();
+        PRINCIPAL.escritorio.add(Res);
+        Res.show();// TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnNuevoResponsable1ActionPerformed
 
 

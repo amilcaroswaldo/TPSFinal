@@ -212,6 +212,11 @@ public class FRSalonClase extends javax.swing.JInternalFrame {
             controlGrado.mostrarGrado(tableGrado);
         } catch (Exception e) {
         }
+        finally{
+            idSecc =0;
+            VGrado="";
+            fechaGrad = "";
+        }
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void txtYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtYearActionPerformed
@@ -222,6 +227,7 @@ public class FRSalonClase extends javax.swing.JInternalFrame {
         try {
             // TODO add your handling code here:
             controlGrado.destroy(idGrado);
+            controlGrado.mostrarGrado(tableGrado);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(FRSalonClase.class.getName()).log(Level.SEVERE, null, ex);
         }
