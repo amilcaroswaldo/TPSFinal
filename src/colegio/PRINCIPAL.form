@@ -6,7 +6,13 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagenes/optimizacion.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Administracion"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="16" style="0"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenu1ActionPerformed"/>
@@ -14,6 +20,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagenes/agregar-usuario.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Registrar empleado"/>
               </Properties>
               <Events>
@@ -22,6 +31,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagenes/asignar.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Asignar materias"/>
               </Properties>
               <Events>
@@ -30,6 +42,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagenes/anadir-amigo.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Matricula alumno"/>
               </Properties>
               <Events>
@@ -38,6 +53,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagenes/computadora.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Salones de clase"/>
               </Properties>
               <Events>
@@ -46,6 +64,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagenes/add_materia.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Materia"/>
               </Properties>
               <Events>
@@ -56,11 +77,20 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagenes/calificaciones.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Notas"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="16" style="0"/>
+            </Property>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagenes/addNotas.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Registro de notas"/>
               </Properties>
               <Events>
@@ -69,6 +99,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem7">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagenes/imprimir.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Imprimir notas"/>
               </Properties>
               <Events>
@@ -108,7 +141,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="escritorio" alignment="0" pref="279" max="32767" attributes="0"/>
+          <Component id="escritorio" alignment="0" pref="266" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -131,7 +164,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="279" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="266" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>

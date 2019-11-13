@@ -7,6 +7,9 @@ package colegio;
 
 import javax.swing.JInternalFrame;
 import Acceso_Datos.Sesion;
+import claseFondo.ImagenFondo;
+
+
 /**
  *
  * @author DELL
@@ -19,7 +22,9 @@ public class PRINCIPAL extends javax.swing.JFrame {
      */
     public PRINCIPAL() {
         initComponents();
-        this.setExtendedState(PRINCIPAL.MAXIMIZED_BOTH);
+        
+        escritorio.setBorder(new ImagenFondo());
+       this.setExtendedState(PRINCIPAL.MAXIMIZED_BOTH);
         System.out.println("Prueba 1 "+ classSesion.getNombreUsuario());
     }
 
@@ -56,16 +61,19 @@ public class PRINCIPAL extends javax.swing.JFrame {
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGap(0, 266, Short.MAX_VALUE)
         );
 
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/optimizacion.png"))); // NOI18N
         jMenu1.setText("Administracion");
+        jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu1ActionPerformed(evt);
             }
         });
 
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/agregar-usuario.png"))); // NOI18N
         jMenuItem1.setText("Registrar empleado");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,6 +82,7 @@ public class PRINCIPAL extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/asignar.png"))); // NOI18N
         jMenuItem6.setText("Asignar materias");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,6 +91,7 @@ public class PRINCIPAL extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem6);
 
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/anadir-amigo.png"))); // NOI18N
         jMenuItem4.setText("Matricula alumno");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,6 +100,7 @@ public class PRINCIPAL extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem4);
 
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/computadora.png"))); // NOI18N
         jMenuItem2.setText("Salones de clase");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,6 +109,7 @@ public class PRINCIPAL extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add_materia.png"))); // NOI18N
         jMenuItem3.setText("Materia");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,8 +120,11 @@ public class PRINCIPAL extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/calificaciones.png"))); // NOI18N
         jMenu2.setText("Notas");
+        jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/addNotas.png"))); // NOI18N
         jMenuItem5.setText("Registro de notas");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,6 +133,7 @@ public class PRINCIPAL extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem5);
 
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/imprimir.png"))); // NOI18N
         jMenuItem7.setText("Imprimir notas");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,7 +154,7 @@ public class PRINCIPAL extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
         );
 
         pack();
