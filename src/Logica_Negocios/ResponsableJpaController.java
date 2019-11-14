@@ -222,6 +222,7 @@ public class ResponsableJpaController implements Serializable {
             camposRepresentante[6] = item.getProfesion()+"";
             camposRepresentante[7] = item.getLugarTrabajo()+"";
             camposRepresentante[8] = item.getTelefonoTrabajo()+"";
+            camposRepresentante[9] = item.getDireccionTrabajo()+"";
             
             modelo.addRow(camposRepresentante);
         }
