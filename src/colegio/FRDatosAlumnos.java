@@ -122,6 +122,11 @@ public class FRDatosAlumnos extends javax.swing.JInternalFrame {
         cbxParent.setModel(new javax.swing.DefaultComboBoxModel(new String[] {}));
 
         btbCancelar.setText("Cancelar");
+        btbCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btbCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -359,7 +364,8 @@ public class FRDatosAlumnos extends javax.swing.JInternalFrame {
         //idResp = cbxParent.getItemAt(cbxParent.getSelectedIndex()).getIdParentesco();
         idParen = cbxParent.getItemAt(cbxParent.getSelectedIndex()).getIdParentesco();
         try {
-            if (AlumnoVars.editar) {
+          
+                 if (AlumnoVars.editar) {
               //  classResp.setIdResponsable(idResp);
                 classParentesco.setIdParentesco(idParen);
                 classAlum.setNombre(txtNombre.getText().toLowerCase());
@@ -375,6 +381,7 @@ public class FRDatosAlumnos extends javax.swing.JInternalFrame {
                 classAlum.setFechaNacimiento(txtFechaNac.getText().toLowerCase());
                 classAlum.setIdAlumno(AlumnoVars.idAlumno);
                 conttrolAlumno.edit(classAlum);
+                  JOptionPane.showMessageDialog(this, "Registrado con éxito");
             } else {
                 classResp.setIdResponsable(idResp);
                 classParentesco.setIdParentesco(idParen);
@@ -385,7 +392,10 @@ public class FRDatosAlumnos extends javax.swing.JInternalFrame {
                 classAlum.setProblemasSalud(txtSalud.getText().toLowerCase());
                 classAlum.setFechaNacimiento(txtFechaNac.getText().toLowerCase());
                 conttrolAlumno.create(classAlum);
-            }
+                JOptionPane.showMessageDialog(this, "Registrado con éxito");
+            } 
+              
+            
         } catch (Exception e) {
         }
         //JOptionPane.showMessageDialog(null, cbxParent.getItemAt(cbxParent.getSelectedIndex()).getxtNombreco());
@@ -399,6 +409,20 @@ public class FRDatosAlumnos extends javax.swing.JInternalFrame {
         Res.show();// TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnNuevoResponsable1ActionPerformed
+
+    private void btbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btbCancelarActionPerformed
+        // TODO add your handling code here:
+        if (JOptionPane.showConfirmDialog(rootPane, "Se perderá la información ya agregada en los campos. ¿Desea continuar?",
+        "Cancelar Registro", JOptionPane.WARNING_MESSAGE, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+     this.txtNombre.setText("");
+     this.txtApellido.setText("");
+     this.txtResp.setText("");
+     this.txtSalud.setText("");
+     this.txtFechaNac.setText("");
+
+
+    }
+    }//GEN-LAST:event_btbCancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

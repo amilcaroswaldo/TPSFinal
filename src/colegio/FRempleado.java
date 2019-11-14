@@ -178,6 +178,11 @@ public class FRempleado extends javax.swing.JInternalFrame {
         jLabel6.setText("Privilegios:");
 
         comboPrivilegioEmp.setModel(new javax.swing.DefaultComboBoxModel(new String[] {}));
+        comboPrivilegioEmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboPrivilegioEmpActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar.png"))); // NOI18N
         btnGuardar.setText("Guardar");
@@ -487,6 +492,10 @@ public class FRempleado extends javax.swing.JInternalFrame {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void comboPrivilegioEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPrivilegioEmpActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboPrivilegioEmpActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

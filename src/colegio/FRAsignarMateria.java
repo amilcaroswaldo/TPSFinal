@@ -12,6 +12,7 @@ import Logica_Negocios.UsuarioJpaController;
 import Logica_Negocios.MateriaJpaController;
 import Logica_Negocios.UsuarioMateJpaController;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -221,7 +222,10 @@ public class FRAsignarMateria extends javax.swing.JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         try {
-            for (int i = 0; i <= TableMateProfe.getRowCount(); i++) {
+             if(this.TableMateProfe.getRowCount()==0){
+                JOptionPane.showMessageDialog(this, "Debe agregar primero usuarios a la tabla");
+             }else{
+                  for (int i = 0; i <= TableMateProfe.getRowCount(); i++) {
                 Usuario classUsuario = new Usuario();
                 Materia classMateria = new Materia();
                 UsuarioMate classUsMat = new UsuarioMate();
@@ -232,15 +236,24 @@ public class FRAsignarMateria extends javax.swing.JInternalFrame {
                 classUsMat.setIdMateria(classMateria);
                 classUsMat.setIdUsuario(classUsuario);
                 controAddMta.create(classUsMat);
+                JOptionPane.showMessageDialog(this, "Almacenados con éxito"); 
             }
+                        
+            } 
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEliminiarMateProfeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminiarMateProfeActionPerformed
         // TODO add your handling code here:
-         DefaultTableModel modelo = (DefaultTableModel) TableMateProfe.getModel();
+        if(this.TableMateProfe.getSelectedRow()==-1){
+              JOptionPane.showMessageDialog(this, "Debe seleccionar primero la matería que eliminaras.");
+        }else if(JOptionPane.showConfirmDialog(rootPane, "Se eliminará la materia seleccionada. ¿Desea continuar?",
+        "Cancelar Registro", JOptionPane.WARNING_MESSAGE, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+               DefaultTableModel modelo = (DefaultTableModel) TableMateProfe.getModel();
         modelo.removeRow(TableMateProfe.getSelectedRow());
+        }
+      
     }//GEN-LAST:event_btnEliminiarMateProfeActionPerformed
 
     private void ComboMaetsroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboMaetsroActionPerformed
