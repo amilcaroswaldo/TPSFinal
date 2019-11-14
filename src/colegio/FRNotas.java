@@ -75,6 +75,7 @@ public class FRNotas extends javax.swing.JInternalFrame {
 
         cbxMateria.setModel(new javax.swing.DefaultComboBoxModel(new String[] {}));
 
+        btnMostar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/mostrar.png"))); // NOI18N
         btnMostar.setText("Mostrar alumnos");
         btnMostar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -163,6 +164,7 @@ public class FRNotas extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tableNotas);
 
+        btnExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/sobresalir.png"))); // NOI18N
         btnExportar.setText("Exportar a excel");
         btnExportar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -170,6 +172,7 @@ public class FRNotas extends javax.swing.JInternalFrame {
             }
         });
 
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar.png"))); // NOI18N
         btnGuardar.setText("Guardar notas");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -186,7 +189,7 @@ public class FRNotas extends javax.swing.JInternalFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(289, 289, 289)
                         .addComponent(btnExportar)
-                        .addGap(49, 49, 49)
+                        .addGap(18, 18, 18)
                         .addComponent(btnGuardar))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addContainerGap()
@@ -234,7 +237,7 @@ public class FRNotas extends javax.swing.JInternalFrame {
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblNombeP)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
